@@ -1,0 +1,4848 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RSLogix5000Content SchemaRevision="1.0" SoftwareRevision="20.04" TargetName="EFX_MB_SLAVE" TargetType="AddOnInstructionDefinition" TargetRevision="1.0 " TargetLastEdited="2017-10-20T19:46:42.800Z" ContainsContext="true" Owner="authorizeduser, enerflex" ExportDate="Mon Jun 13 12:18:36 2022" ExportOptions="References DecoratedData Context Dependencies ForceProtectedEncoding AllProjDocTrans">
+<Controller Use="Context" Name="_ModbusAOI">
+<DataTypes Use="Context">
+<DataType Name="TCP_READ_RESP" Family="NoFamily" Class="User">
+<Members>
+<Member Name="FromAddr" DataType="TCP_SOCKET_ADDRESS" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write"/>
+<Member Name="Buf" DataType="STRING480" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write"/>
+</Members>
+<Dependencies>
+<Dependency Type="DataType" Name="TCP_SOCKET_ADDRESS"/>
+<Dependency Type="DataType" Name="STRING480"/>
+</Dependencies>
+</DataType>
+<DataType Name="TCP_READ_PARAM" Family="NoFamily" Class="User">
+<Members>
+<Member Name="Timeout" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[Timeout for operation.  For reads this should be kept to 0 to prevent affecting write operations.]]>
+</Description>
+</Member>
+<Member Name="BufLen" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[Typically set to 484, the maximum non-extended modbus transaction size.]]>
+</Description>
+</Member>
+</Members>
+</DataType>
+<DataType Name="TCP_SOCKET_ADDRESS" Family="NoFamily" Class="User">
+<Members>
+<Member Name="Family" DataType="INT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[Address Family Must be 2]]>
+</Description>
+</Member>
+<Member Name="Port" DataType="INT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[Port Number]]>
+</Description>
+</Member>
+<Member Name="Addr" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[IP Address]]>
+</Description>
+</Member>
+</Members>
+</DataType>
+<DataType Name="TCP_WRITE_PARAM" Family="NoFamily" Class="User">
+<Members>
+<Member Name="Timeout" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write"/>
+<Member Name="ToAddr" DataType="TCP_SOCKET_ADDRESS" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write"/>
+<Member Name="Buffer" DataType="STRING480" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write"/>
+</Members>
+<Dependencies>
+<Dependency Type="DataType" Name="TCP_SOCKET_ADDRESS"/>
+<Dependency Type="DataType" Name="STRING480"/>
+</Dependencies>
+</DataType>
+<DataType Name="TCP_SOCKET_PARAM" Family="NoFamily" Class="User">
+<Members>
+<Member Name="Type" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[1 - TCP 2- UPD]]>
+</Description>
+</Member>
+<Member Name="Addr" DataType="TCP_SOCKET_ADDRESS" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write"/>
+</Members>
+<Dependencies>
+<Dependency Type="DataType" Name="TCP_SOCKET_ADDRESS"/>
+</Dependencies>
+</DataType>
+<DataType Name="EFX_MBS_CONN" Family="NoFamily" Class="User">
+<Members>
+<Member Name="SocketInstance" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write"/>
+<Member Name="ZZZZZZZZZZEFX_MBS_CO1" DataType="SINT" Dimension="0" Radix="Decimal" Hidden="true" ExternalAccess="Read/Write"/>
+<Member Name="Open" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZEFX_MBS_CO1" BitNumber="0" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[Status for the connection being open]]>
+</Description>
+</Member>
+<Member Name="ReadRequest" DataType="TCP_READ_PARAM" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write"/>
+<Member Name="ReadData" DataType="TCP_READ_RESP" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write"/>
+<Member Name="ReadBuffer" DataType="STRING4096" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write"/>
+<Member Name="ZZZZZZZZZZEFX_MBS_CO6" DataType="SINT" Dimension="0" Radix="Decimal" Hidden="true" ExternalAccess="Read/Write"/>
+<Member Name="ReadComplete" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZEFX_MBS_CO6" BitNumber="0" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[Status for the read operation being complete]]>
+</Description>
+</Member>
+<Member Name="CommandInfo" DataType="EFX_MBS_REQ_PKT_INFO" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write"/>
+<Member Name="ZZZZZZZZZZEFX_MBS_CO9" DataType="SINT" Dimension="0" Radix="Decimal" Hidden="true" ExternalAccess="Read/Write"/>
+<Member Name="DataReceived" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZEFX_MBS_CO9" BitNumber="0" ExternalAccess="Read/Write"/>
+<Member Name="ONS_Read" DataType="EFX_ONS" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write"/>
+<Member Name="ONS_ReadError" DataType="EFX_ONS" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write"/>
+<Member Name="ZZZZZZZZZZEFX_MBS_CO13" DataType="SINT" Dimension="0" Radix="Decimal" Hidden="true" ExternalAccess="Read/Write"/>
+<Member Name="WriteRequired" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZEFX_MBS_CO13" BitNumber="0" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[Status for a write operation being required]]>
+</Description>
+</Member>
+<Member Name="WriteData" DataType="TCP_WRITE_PARAM" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write"/>
+<Member Name="WriteDataSent" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[Number of bytes written]]>
+</Description>
+</Member>
+<Member Name="ONS_WriteError" DataType="EFX_ONS" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write"/>
+</Members>
+<Dependencies>
+<Dependency Type="DataType" Name="TCP_READ_PARAM"/>
+<Dependency Type="DataType" Name="TCP_READ_RESP"/>
+<Dependency Type="DataType" Name="STRING4096"/>
+<Dependency Type="DataType" Name="EFX_MBS_REQ_PKT_INFO"/>
+<Dependency Type="AddOnInstructionDefinition" Name="EFX_ONS"/>
+<Dependency Type="AddOnInstructionDefinition" Name="EFX_ONS"/>
+<Dependency Type="DataType" Name="TCP_WRITE_PARAM"/>
+<Dependency Type="AddOnInstructionDefinition" Name="EFX_ONS"/>
+</Dependencies>
+</DataType>
+<DataType Name="EFX_MBS_REQ_PKT_INFO" Family="NoFamily" Class="User">
+<Description>
+<![CDATA[Modbus slave request packet information]]>
+</Description>
+<Members>
+<Member Name="Transaction" DataType="INT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[For sync between message of server/client]]>
+</Description>
+</Member>
+<Member Name="Protocol" DataType="INT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[0 for Modbus TCP]]>
+</Description>
+</Member>
+<Member Name="Length" DataType="INT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[Number of remaining bytes in the packet frame]]>
+</Description>
+</Member>
+<Member Name="Unit" DataType="SINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[Slave address]]>
+</Description>
+</Member>
+<Member Name="Function" DataType="SINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[Code to determine required action/response]]>
+</Description>
+</Member>
+<Member Name="StartAddress" DataType="INT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[Start address of client request]]>
+</Description>
+</Member>
+<Member Name="RegisterCount" DataType="INT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[Number of items in client request]]>
+</Description>
+</Member>
+<Member Name="Data" DataType="SINT" Dimension="462" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[Payload of data packet from client]]>
+</Description>
+</Member>
+<Member Name="PacketSize" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write">
+<Description>
+<![CDATA[Size of entire packet]]>
+</Description>
+</Member>
+<Member Name="ZZZZZZZZZZEFX_MBS_RE9" DataType="SINT" Dimension="0" Radix="Decimal" Hidden="true" ExternalAccess="Read/Write"/>
+<Member Name="ValidFunction" DataType="BIT" Dimension="0" Radix="Decimal" Hidden="false" Target="ZZZZZZZZZZEFX_MBS_RE9" BitNumber="0" ExternalAccess="Read/Write"/>
+</Members>
+</DataType>
+<DataType Name="STRING480" Family="StringFamily" Class="User">
+<Members>
+<Member Name="LEN" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write"/>
+<Member Name="DATA" DataType="SINT" Dimension="480" Radix="ASCII" Hidden="false" ExternalAccess="Read/Write"/>
+</Members>
+</DataType>
+<DataType Name="STRING4096" Family="StringFamily" Class="User">
+<Members>
+<Member Name="LEN" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write"/>
+<Member Name="DATA" DataType="SINT" Dimension="4096" Radix="ASCII" Hidden="false" ExternalAccess="Read/Write"/>
+</Members>
+</DataType>
+<DataType Name="TCP_ACCEPT_RESP" Family="NoFamily" Class="User">
+<Members>
+<Member Name="Instance" DataType="DINT" Dimension="0" Radix="Decimal" Hidden="false" ExternalAccess="Read/Write"/>
+<Member Name="Addr" DataType="TCP_SOCKET_ADDRESS" Dimension="0" Radix="NullType" Hidden="false" ExternalAccess="Read/Write"/>
+</Members>
+<Dependencies>
+<Dependency Type="DataType" Name="TCP_SOCKET_ADDRESS"/>
+</Dependencies>
+</DataType>
+</DataTypes>
+<AddOnInstructionDefinitions Use="Context">
+<AddOnInstructionDefinition Name="EFX_ONS" Revision="1.0" ExecutePrescan="false" ExecutePostscan="false" ExecuteEnableInFalse="false" CreatedDate="2015-02-09T15:41:25.990Z" CreatedBy="ENERFLEX\jbernard" EditedDate="2017-10-20T15:51:14.283Z" EditedBy="ENERFLEX\JBernard" SoftwareRevision="v20.04">
+<Description>
+<![CDATA[ST wrapper for ONS instruction.]]>
+</Description>
+<Parameters>
+<Parameter Name="EnableIn" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[Enable Input - System Defined Parameter]]>
+</Description>
+</Parameter>
+<Parameter Name="EnableOut" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[Enable Output - System Defined Parameter]]>
+</Description>
+</Parameter>
+<Parameter Name="InputBit" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="true" ExternalAccess="None">
+<Description>
+<![CDATA[Input Signal]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="OutputBit" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="true" ExternalAccess="None">
+<Description>
+<![CDATA[Output Signal]]>
+</Description>
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="ResetTotal" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="None">
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+</Parameters>
+<LocalTags>
+<LocalTag Name="CheckBit" DataType="BOOL" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="Total" DataType="DINT" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+</LocalTags>
+<Routines>
+<Routine Name="Logic" Type="ST">
+<STContent>
+<Line Number="0">
+<![CDATA[IF (InputBit AND NOT CheckBit) THEN]]>
+</Line>
+<Line Number="1">
+<![CDATA[	OutputBit := 1;]]>
+</Line>
+<Line Number="2">
+<![CDATA[	Total := Total + 1;]]>
+</Line>
+<Line Number="3">
+<![CDATA[ELSE]]>
+</Line>
+<Line Number="4">
+<![CDATA[	OutputBit := 0;]]>
+</Line>
+<Line Number="5">
+<![CDATA[END_IF;]]>
+</Line>
+<Line Number="6">
+<![CDATA[]]>
+</Line>
+<Line Number="7">
+<![CDATA[CheckBit := InputBit;]]>
+</Line>
+<Line Number="8">
+<![CDATA[]]>
+</Line>
+<Line Number="9">
+<![CDATA[IF (ResetTotal) THEN]]>
+</Line>
+<Line Number="10">
+<![CDATA[	Total := 0;]]>
+</Line>
+<Line Number="11">
+<![CDATA[	ResetTotal := 0;]]>
+</Line>
+<Line Number="12">
+<![CDATA[END_IF;]]>
+</Line>
+</STContent>
+</Routine>
+</Routines>
+</AddOnInstructionDefinition>
+<AddOnInstructionDefinition Name="EFX_MBS_READ_REGISTER" Revision="1.0" Vendor="Enerflex, Ltd." ExecutePrescan="false" ExecutePostscan="false" ExecuteEnableInFalse="false" CreatedDate="2015-03-05T17:34:43.300Z" CreatedBy="ENERFLEX\jbernard" EditedDate="2017-10-20T13:37:57.650Z" EditedBy="ENERFLEX\JBernard" SoftwareRevision="v20.04"
+>
+<Parameters>
+<Parameter Name="EnableIn" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[Enable Input - System Defined Parameter]]>
+</Description>
+</Parameter>
+<Parameter Name="EnableOut" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[Enable Output - System Defined Parameter]]>
+</Description>
+</Parameter>
+<Parameter Name="Connection" TagType="Base" DataType="EFX_MBS_CONN" Usage="InOut" Required="true" Visible="true" Constant="false"/>
+<Parameter Name="MaxRegisterLength" TagType="Base" DataType="DINT" Usage="Input" Radix="Decimal" Required="true" Visible="true" ExternalAccess="None">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="Data" TagType="Base" DataType="INT" Dimensions="2" Usage="InOut" Radix="Decimal" Required="true" Visible="true" Constant="false"/>
+</Parameters>
+<LocalTags>
+<LocalTag Name="ValidEndAddress" DataType="BOOL" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="ValidRegisterLength" DataType="BOOL" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="ValidStartAddress" DataType="BOOL" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="HeaderOffset" DataType="INT" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="INT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="DataBytes" DataType="INT" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="INT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="i" DataType="INT" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="INT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="PayloadIndex" DataType="DINT" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="LocalArrayIndex" DataType="DINT" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="DataOffset" DataType="DINT" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+</LocalTags>
+<Routines>
+<Routine Name="Logic" Type="ST">
+<STContent>
+<Line Number="0">
+<![CDATA[/******************************************************************************************]]>
+</Line>
+<Line Number="1">
+<![CDATA[***]]>
+</Line>
+<Line Number="2">
+<![CDATA[***                                   ==============]]>
+</Line>
+<Line Number="3">
+<![CDATA[***                                   REQUEST PACKET]]>
+</Line>
+<Line Number="4">
+<![CDATA[***                                   ==============]]>
+</Line>
+<Line Number="5">
+<![CDATA[***]]>
+</Line>
+<Line Number="6">
+<![CDATA[***   |  00  |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |  11  |]]>
+</Line>
+<Line Number="7">
+<![CDATA[***   -------------------------------------------------------------------------------------]]>
+</Line>
+<Line Number="8">
+<![CDATA[***   | TRANSACTION | PROTOCOL ID |  MSG LENGTH | UNIT | FUNC | START  ADDR |  REG COUNT  |]]>
+</Line>
+<Line Number="9">
+<![CDATA[***]]>
+</Line>
+<Line Number="10">
+<![CDATA[***]]>
+</Line>
+<Line Number="11">
+<![CDATA[***                                   ===============]]>
+</Line>
+<Line Number="12">
+<![CDATA[***                                   RESPONSE PACKET]]>
+</Line>
+<Line Number="13">
+<![CDATA[***                                   ===============]]>
+</Line>
+<Line Number="14">
+<![CDATA[***]]>
+</Line>
+<Line Number="15">
+<![CDATA[***   |  00  |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10+   |]]>
+</Line>
+<Line Number="16">
+<![CDATA[***   --------------------------------------------------------------------------------]]>
+</Line>
+<Line Number="17">
+<![CDATA[***   | TRANSACTION | PROTOCOL ID |  MSG LENGTH | UNIT | FUNC | DATA  BYTES |  DATA  |]]>
+</Line>
+<Line Number="18">
+<![CDATA[***]]>
+</Line>
+<Line Number="19">
+<![CDATA[***   NOTES:]]>
+</Line>
+<Line Number="20">
+<![CDATA[***   1. DATA BYTES = 2 BYTES * NUM OF REGISTERS RETURNED]]>
+</Line>
+<Line Number="21">
+<![CDATA[***   2. DATA = BYTES REQUIRED FOR ALL REQUESTED DATA]]>
+</Line>
+<Line Number="22">
+<![CDATA[***]]>
+</Line>
+<Line Number="23">
+<![CDATA[*********************************************************************************************/]]>
+</Line>
+<Line Number="24">
+<![CDATA[]]>
+</Line>
+<Line Number="25">
+<![CDATA[ValidStartAddress := (Connection.CommandInfo.StartAddress > 0) AND (Connection.CommandInfo.StartAddress <= 999);]]>
+</Line>
+<Line Number="26">
+<![CDATA[ValidRegisterLength := (Connection.CommandInfo.RegisterCount >= 1) AND (Connection.CommandInfo.RegisterCount <= MaxRegisterLength);]]>
+</Line>
+<Line Number="27">
+<![CDATA[ValidEndAddress := (Connection.CommandInfo.StartAddress + Connection.CommandInfo.RegisterCount - 1) <= 2047;]]>
+</Line>
+<Line Number="28">
+<![CDATA[]]>
+</Line>
+<Line Number="29">
+<![CDATA[IF ( ValidStartAddress AND ValidRegisterLength AND ValidEndAddress ) THEN]]>
+</Line>
+<Line Number="30">
+<![CDATA[	//Write Data Header Information]]>
+</Line>
+<Line Number="31">
+<![CDATA[	COP(Connection.CommandInfo.Transaction, Connection.WriteData.Buffer.DATA[0], 2);]]>
+</Line>
+<Line Number="32">
+<![CDATA[	COP(Connection.CommandInfo.Protocol, Connection.WriteData.Buffer.DATA[2], 2);]]>
+</Line>
+<Line Number="33">
+<![CDATA[	COP(Connection.CommandInfo.Unit, Connection.WriteData.Buffer.DATA[6], 1);]]>
+</Line>
+<Line Number="34">
+<![CDATA[	COP(Connection.CommandInfo.Function, Connection.WriteData.Buffer.DATA[7], 1);]]>
+</Line>
+<Line Number="35">
+<![CDATA[]]>
+</Line>
+<Line Number="36">
+<![CDATA[	HeaderOffset := 8;]]>
+</Line>
+<Line Number="37">
+<![CDATA[	DataOffset := HeaderOffset + 2;]]>
+</Line>
+<Line Number="38">
+<![CDATA[	DataBytes := Connection.CommandInfo.RegisterCount * 2;]]>
+</Line>
+<Line Number="39">
+<![CDATA[	COP(DataBytes, Connection.WriteData.Buffer.DATA[HeaderOffset], 2);]]>
+</Line>
+<Line Number="40">
+<![CDATA[]]>
+</Line>
+<Line Number="41">
+<![CDATA[	PayloadIndex := 0;]]>
+</Line>
+<Line Number="42">
+<![CDATA[	LocalArrayIndex := Connection.CommandInfo.StartAddress;]]>
+</Line>
+<Line Number="43">
+<![CDATA[	FOR i := 0 TO (Connection.CommandInfo.RegisterCount - 1) BY 1 DO]]>
+</Line>
+<Line Number="44">
+<![CDATA[		COP(Data[LocalArrayIndex - 1], Connection.WriteData.Buffer.DATA[DataOffset + PayloadIndex], 2);]]>
+</Line>
+<Line Number="45">
+<![CDATA[		LocalArrayIndex := LocalArrayIndex + 1;]]>
+</Line>
+<Line Number="46">
+<![CDATA[		PayloadIndex := PayloadIndex + 2;]]>
+</Line>
+<Line Number="47">
+<![CDATA[	END_FOR;]]>
+</Line>
+<Line Number="48">
+<![CDATA[]]>
+</Line>
+<Line Number="49">
+<![CDATA[	Connection.WriteData.Buffer.LEN := HeaderOffset + DataBytes + 2;]]>
+</Line>
+<Line Number="50">
+<![CDATA[ELSIF ( NOT ValidStartAddress ) THEN]]>
+</Line>
+<Line Number="51">
+<![CDATA[]]>
+</Line>
+<Line Number="52">
+<![CDATA[ELSIF ( NOT ValidRegisterLength ) THEN]]>
+</Line>
+<Line Number="53">
+<![CDATA[]]>
+</Line>
+<Line Number="54">
+<![CDATA[ELSIF ( NOT ValidEndAddress ) THEN]]>
+</Line>
+<Line Number="55">
+<![CDATA[]]>
+</Line>
+<Line Number="56">
+<![CDATA[END_IF;]]>
+</Line>
+<Line Number="57">
+<![CDATA[]]>
+</Line>
+<Line Number="58">
+<![CDATA[Connection.WriteRequired := 1;]]>
+</Line>
+<Line Number="59">
+<![CDATA[]]>
+</Line>
+<Line Number="60">
+<![CDATA[//Clear Read Buffer]]>
+</Line>
+<Line Number="61">
+<![CDATA[Connection.ReadBuffer.LEN := 0;]]>
+</Line>
+</STContent>
+</Routine>
+</Routines>
+<Dependencies>
+<Dependency Type="DataType" Name="EFX_MBS_CONN"/>
+</Dependencies>
+</AddOnInstructionDefinition>
+<AddOnInstructionDefinition Name="EFX_MBS_READ_STATUS" Revision="1.0" Vendor="Enerflex, Ltd." ExecutePrescan="false" ExecutePostscan="false" ExecuteEnableInFalse="false" CreatedDate="2015-02-13T20:47:23.426Z" CreatedBy="ENERFLEX\JBernard" EditedDate="2017-10-18T16:08:49.065Z" EditedBy="ENERFLEX\JBernard" SoftwareRevision="v20.04"
+>
+<Description>
+<![CDATA[Process Coil Status and Input Status read commands from a Modbus master]]>
+</Description>
+<Parameters>
+<Parameter Name="EnableIn" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[Enable Input - System Defined Parameter]]>
+</Description>
+</Parameter>
+<Parameter Name="EnableOut" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[Enable Output - System Defined Parameter]]>
+</Description>
+</Parameter>
+<Parameter Name="Connection" TagType="Base" DataType="EFX_MBS_CONN" Usage="InOut" Required="true" Visible="true" Constant="false"/>
+<Parameter Name="MaxRegisterLength" TagType="Base" DataType="DINT" Usage="Input" Radix="Decimal" Required="true" Visible="true" ExternalAccess="None">
+<DefaultData>78 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="120"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="Data" TagType="Base" DataType="INT" Dimensions="64" Usage="InOut" Radix="Decimal" Required="true" Visible="true" Constant="false"/>
+</Parameters>
+<LocalTags>
+<LocalTag Name="ValidRegisterLength" DataType="BOOL" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="ValidStartAddress" DataType="BOOL" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="ValidEndAddress" DataType="BOOL" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="ByteCount" DataType="DINT" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="PayloadBytes" DataType="INT" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="INT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="Length" DataType="INT" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="INT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="HeaderOffset" DataType="INT" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="INT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="WriteDataPayloadBit" DataType="SINT" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="SINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="LocalArrayBit" DataType="SINT" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="SINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="i" DataType="DINT" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="WriteDataPayloadIndex" DataType="DINT" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="LocalArrayIndex" DataType="DINT" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+</LocalTags>
+<Routines>
+<Routine Name="Logic" Type="ST">
+<STContent>
+<Line Number="0">
+<![CDATA[ValidStartAddress := (Connection.CommandInfo.StartAddress > 0) AND (Connection.CommandInfo.StartAddress <= 999);]]>
+</Line>
+<Line Number="1">
+<![CDATA[ValidRegisterLength := (Connection.CommandInfo.RegisterCount >= 1) AND (Connection.CommandInfo.RegisterCount <= MaxRegisterLength);]]>
+</Line>
+<Line Number="2">
+<![CDATA[ValidEndAddress := (Connection.CommandInfo.StartAddress + Connection.CommandInfo.RegisterCount - 1) <= 2047;]]>
+</Line>
+<Line Number="3">
+<![CDATA[]]>
+</Line>
+<Line Number="4">
+<![CDATA[//Write Data Header Information]]>
+</Line>
+<Line Number="5">
+<![CDATA[COP(Connection.CommandInfo.Transaction, Connection.WriteData.Buffer.DATA[0], 2);]]>
+</Line>
+<Line Number="6">
+<![CDATA[COP(Connection.CommandInfo.Protocol, Connection.WriteData.Buffer.DATA[2], 2);]]>
+</Line>
+<Line Number="7">
+<![CDATA[COP(Connection.CommandInfo.Unit, Connection.WriteData.Buffer.DATA[6], 1);]]>
+</Line>
+<Line Number="8">
+<![CDATA[COP(Connection.CommandInfo.Function, Connection.WriteData.Buffer.DATA[7], 1);]]>
+</Line>
+<Line Number="9">
+<![CDATA[]]>
+</Line>
+<Line Number="10">
+<![CDATA[//Number of bytes used for data in response]]>
+</Line>
+<Line Number="11">
+<![CDATA[ByteCount := ((Connection.CommandInfo.RegisterCount - 1) / 8) + 1;]]>
+</Line>
+<Line Number="12">
+<![CDATA[Connection.WriteData.Buffer.DATA[8] := ByteCount;]]>
+</Line>
+<Line Number="13">
+<![CDATA[]]>
+</Line>
+<Line Number="14">
+<![CDATA[//Number of bytes in payload of reponse]]>
+</Line>
+<Line Number="15">
+<![CDATA[PayloadBytes := ByteCount + 3;]]>
+</Line>
+<Line Number="16">
+<![CDATA[SWPB(PayloadBytes, REVERSE, PayloadBytes);]]>
+</Line>
+<Line Number="17">
+<![CDATA[COP(PayloadBytes, Connection.WriteData.Buffer.DATA[4], 2);]]>
+</Line>
+<Line Number="18">
+<![CDATA[SWPB(PayloadBytes, REVERSE, PayloadBytes);]]>
+</Line>
+<Line Number="19">
+<![CDATA[]]>
+</Line>
+<Line Number="20">
+<![CDATA[//Initialization Items]]>
+</Line>
+<Line Number="21">
+<![CDATA[HeaderOffset := 9;]]>
+</Line>
+<Line Number="22">
+<![CDATA[LocalArrayIndex := (Connection.CommandInfo.StartAddress - 1) / 16;]]>
+</Line>
+<Line Number="23">
+<![CDATA[LocalArrayBit := (Connection.CommandInfo.StartAddress - 1) MOD 16;]]>
+</Line>
+<Line Number="24">
+<![CDATA[WriteDataPayloadIndex := (Connection.CommandInfo.StartAddress - 1) / 8;]]>
+</Line>
+<Line Number="25">
+<![CDATA[WriteDataPayloadBit := (Connection.CommandInfo.StartAddress - 1) MOD 8;]]>
+</Line>
+<Line Number="26">
+<![CDATA[]]>
+</Line>
+<Line Number="27">
+<![CDATA[FOR i := 0 TO (Connection.CommandInfo.RegisterCount - 1) BY 1 DO]]>
+</Line>
+<Line Number="28">
+<![CDATA[	Connection.WriteData.Buffer.DATA[HeaderOffset + WriteDataPayloadIndex].[WriteDataPayloadBit] := Data[LocalArrayIndex].[LocalArrayBit];]]>
+</Line>
+<Line Number="29">
+<![CDATA[]]>
+</Line>
+<Line Number="30">
+<![CDATA[	IF (LocalArrayBit = 15) THEN]]>
+</Line>
+<Line Number="31">
+<![CDATA[		LocalArrayBit := 0;]]>
+</Line>
+<Line Number="32">
+<![CDATA[		LocalArrayIndex := LocalArrayIndex + 1;]]>
+</Line>
+<Line Number="33">
+<![CDATA[	ELSE]]>
+</Line>
+<Line Number="34">
+<![CDATA[		LocalArrayBit := LocalArrayBit + 1;]]>
+</Line>
+<Line Number="35">
+<![CDATA[	END_IF;]]>
+</Line>
+<Line Number="36">
+<![CDATA[]]>
+</Line>
+<Line Number="37">
+<![CDATA[	IF (WriteDataPayloadBit = 7) THEN]]>
+</Line>
+<Line Number="38">
+<![CDATA[		WriteDataPayloadBit := 0;]]>
+</Line>
+<Line Number="39">
+<![CDATA[		WriteDataPayloadIndex := WriteDataPayloadIndex + 1;]]>
+</Line>
+<Line Number="40">
+<![CDATA[	ELSE]]>
+</Line>
+<Line Number="41">
+<![CDATA[		WriteDataPayloadBit := WriteDataPayloadBit + 1;]]>
+</Line>
+<Line Number="42">
+<![CDATA[	END_IF;]]>
+</Line>
+<Line Number="43">
+<![CDATA[END_FOR;]]>
+</Line>
+<Line Number="44">
+<![CDATA[]]>
+</Line>
+<Line Number="45">
+<![CDATA[Connection.WriteData.Buffer.LEN := HeaderOffset + ByteCount;]]>
+</Line>
+<Line Number="46">
+<![CDATA[Connection.WriteRequired := 1;]]>
+</Line>
+<Line Number="47">
+<![CDATA[]]>
+</Line>
+<Line Number="48">
+<![CDATA[//Clear Read Buffer]]>
+</Line>
+<Line Number="49">
+<![CDATA[Connection.ReadBuffer.LEN := 0;]]>
+</Line>
+<Line Number="50">
+<![CDATA[]]>
+</Line>
+<Line Number="51">
+<![CDATA[]]>
+</Line>
+<Line Number="52">
+<![CDATA[]]>
+</Line>
+<Line Number="53">
+<![CDATA[]]>
+</Line>
+<Line Number="54">
+<![CDATA[]]>
+</Line>
+<Line Number="55">
+<![CDATA[/**/]]>
+</Line>
+</STContent>
+</Routine>
+</Routines>
+<Dependencies>
+<Dependency Type="DataType" Name="EFX_MBS_CONN"/>
+</Dependencies>
+</AddOnInstructionDefinition>
+<AddOnInstructionDefinition Name="EFX_MBS_RWMSG" Revision="1.0" Vendor="Enerflex, Ltd." ExecutePrescan="false" ExecutePostscan="false" ExecuteEnableInFalse="false" CreatedDate="2015-03-05T16:50:58.487Z" CreatedBy="ENERFLEX\jbernard" EditedDate="2017-10-20T19:31:05.082Z" EditedBy="ENERFLEX\JBernard" SoftwareRevision="v20.04"
+>
+<Description>
+<![CDATA[Handle reading and writing of messages for modbus slave requests and responses]]>
+</Description>
+<Parameters>
+<Parameter Name="EnableIn" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[Enable Input - System Defined Parameter]]>
+</Description>
+</Parameter>
+<Parameter Name="EnableOut" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[Enable Output - System Defined Parameter]]>
+</Description>
+</Parameter>
+<Parameter Name="Connection" TagType="Base" DataType="EFX_MBS_CONN" Usage="InOut" Required="true" Visible="true" Constant="false"/>
+<Parameter Name="MsgRead" TagType="Base" DataType="MESSAGE" Usage="InOut" Required="true" Visible="true"/>
+<Parameter Name="MsgWrite" TagType="Base" DataType="MESSAGE" Usage="InOut" Required="true" Visible="true"/>
+<Parameter Name="NumRequests" TagType="Base" DataType="DINT" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="None">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+</Parameters>
+<LocalTags>
+<LocalTag Name="testCNT1" DataType="DINT" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="testCNT3" DataType="DINT" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="testCNT2" DataType="DINT" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+</LocalTags>
+<Routines>
+<Routine Name="Logic" Type="ST">
+<STContent>
+<Line Number="0">
+<![CDATA[//SOCKET READS/WRITES FOR ALL CONNECTIONS]]>
+</Line>
+<Line Number="1">
+<![CDATA[IF (Connection.SocketInstance <> 0) THEN]]>
+</Line>
+<Line Number="2">
+<![CDATA[	Connection.Open := 1;]]>
+</Line>
+<Line Number="3">
+<![CDATA[END_IF;]]>
+</Line>
+<Line Number="4">
+<![CDATA[]]>
+</Line>
+<Line Number="5">
+<![CDATA[IF (Connection.Open) THEN]]>
+</Line>
+<Line Number="6">
+<![CDATA[	//Read incoming traffic]]>
+</Line>
+<Line Number="7">
+<![CDATA[	IF ( (MsgRead.DN OR MsgRead.ER OR ( NOT MsgRead.EN )) AND NOT Connection.ReadComplete) THEN]]>
+</Line>
+<Line Number="8">
+<![CDATA[		MSG(MsgRead);]]>
+</Line>
+<Line Number="9">
+<![CDATA[	END_IF;]]>
+</Line>
+<Line Number="10">
+<![CDATA[]]>
+</Line>
+<Line Number="11">
+<![CDATA[	Connection.ONS_Read.InputBit := (Connection.ReadData.Buf.LEN > 0);]]>
+</Line>
+<Line Number="12">
+<![CDATA[	EFX_ONS(Connection.ONS_Read);]]>
+</Line>
+<Line Number="13">
+<![CDATA[]]>
+</Line>
+<Line Number="14">
+<![CDATA[	IF (Connection.ONS_Read.OutputBit) THEN]]>
+</Line>
+<Line Number="15">
+<![CDATA[		Connection.ReadComplete := 1;]]>
+</Line>
+<Line Number="16">
+<![CDATA[		NumRequests := NumRequests + 1;]]>
+</Line>
+<Line Number="17">
+<![CDATA[	END_IF;]]>
+</Line>
+<Line Number="18">
+<![CDATA[]]>
+</Line>
+<Line Number="19">
+<![CDATA[	//If MSG returns as error becuase socket not present or connection closed, the socket record will be erased]]>
+</Line>
+<Line Number="20">
+<![CDATA[	Connection.ONS_ReadError.InputBit := MsgRead.ER;]]>
+</Line>
+<Line Number="21">
+<![CDATA[	EFX_ONS(Connection.ONS_ReadError);]]>
+</Line>
+<Line Number="22">
+<![CDATA[]]>
+</Line>
+<Line Number="23">
+<![CDATA[	Connection.Open := NOT (Connection.ONS_ReadError.OutputBit OR]]>
+</Line>
+<Line Number="24">
+<![CDATA[		((MsgRead.ERR = 255) AND (MsgRead.EXERR = 16#0000_0033)) OR]]>
+</Line>
+<Line Number="25">
+<![CDATA[		((MsgRead.ERR = 255) AND (MsgRead.EXERR = 16#0000_0036)) OR]]>
+</Line>
+<Line Number="26">
+<![CDATA[		((MsgRead.ERR = 255) AND (MsgRead.EXERR = 16#0000_003D)) OR]]>
+</Line>
+<Line Number="27">
+<![CDATA[		(MsgRead.ERR = 5));]]>
+</Line>
+<Line Number="28">
+<![CDATA[]]>
+</Line>
+<Line Number="29">
+<![CDATA[	//If there was an error on the read/write, clear the instance to reset the connection]]>
+</Line>
+<Line Number="30">
+<![CDATA[	//   and make it available for a new incoming connection]]>
+</Line>
+<Line Number="31">
+<![CDATA[	IF ( NOT Connection.Open ) THEN]]>
+</Line>
+<Line Number="32">
+<![CDATA[		Connection.SocketInstance := 0;]]>
+</Line>
+<Line Number="33">
+<![CDATA[	END_IF;]]>
+</Line>
+<Line Number="34">
+<![CDATA[]]>
+</Line>
+<Line Number="35">
+<![CDATA[	//Send TCP responses back to the client]]>
+</Line>
+<Line Number="36">
+<![CDATA[	IF (Connection.Open AND Connection.WriteRequired) THEN]]>
+</Line>
+<Line Number="37">
+<![CDATA[		MsgWrite.REQ_LEN := Connection.WriteData.Buffer.LEN + 16;]]>
+</Line>
+<Line Number="38">
+<![CDATA[		MSG(MsgWrite);]]>
+</Line>
+<Line Number="39">
+<![CDATA[		Connection.WriteRequired := 0;]]>
+</Line>
+<Line Number="40">
+<![CDATA[	END_IF;]]>
+</Line>
+<Line Number="41">
+<![CDATA[]]>
+</Line>
+<Line Number="42">
+<![CDATA[	//If MSG returns as error becuase socket not present or connection closed, the socket record will be erased]]>
+</Line>
+<Line Number="43">
+<![CDATA[	Connection.ONS_WriteError.InputBit := MsgWrite.ER;]]>
+</Line>
+<Line Number="44">
+<![CDATA[	EFX_ONS(Connection.ONS_WriteError);]]>
+</Line>
+<Line Number="45">
+<![CDATA[]]>
+</Line>
+<Line Number="46">
+<![CDATA[	Connection.Open := NOT (Connection.ONS_WriteError.OutputBit OR]]>
+</Line>
+<Line Number="47">
+<![CDATA[		((MsgWrite.ERR = 255) AND (MsgWrite.EXERR = 51)) OR]]>
+</Line>
+<Line Number="48">
+<![CDATA[		((MsgWrite.ERR = 255) AND (MsgWrite.EXERR = 54)) OR]]>
+</Line>
+<Line Number="49">
+<![CDATA[		((MsgWrite.ERR = 255) AND (MsgWrite.EXERR = 60)) OR]]>
+</Line>
+<Line Number="50">
+<![CDATA[		(MsgWrite.ERR = 5));]]>
+</Line>
+<Line Number="51">
+<![CDATA[]]>
+</Line>
+<Line Number="52">
+<![CDATA[	//If there was an error on the read/write, clear the instance to reset the connection]]>
+</Line>
+<Line Number="53">
+<![CDATA[	//   and make it available for a new incoming connection]]>
+</Line>
+<Line Number="54">
+<![CDATA[	IF ( NOT Connection.Open ) THEN]]>
+</Line>
+<Line Number="55">
+<![CDATA[		Connection.SocketInstance := 0;]]>
+</Line>
+<Line Number="56">
+<![CDATA[	END_IF;]]>
+</Line>
+<Line Number="57">
+<![CDATA[]]>
+</Line>
+<Line Number="58">
+<![CDATA[END_IF;]]>
+</Line>
+</STContent>
+</Routine>
+</Routines>
+<Dependencies>
+<Dependency Type="DataType" Name="EFX_MBS_CONN"/>
+</Dependencies>
+</AddOnInstructionDefinition>
+<AddOnInstructionDefinition Name="EFX_MBS_WRITE_REGISTER" Revision="1.0" Vendor="Enerflex, Ltd." ExecutePrescan="false" ExecutePostscan="false" ExecuteEnableInFalse="false" CreatedDate="2015-03-05T17:34:43.300Z" CreatedBy="ENERFLEX\jbernard" EditedDate="2017-10-20T15:41:01.072Z" EditedBy="ENERFLEX\JBernard" SoftwareRevision="v20.04"
+>
+<Parameters>
+<Parameter Name="EnableIn" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[Enable Input - System Defined Parameter]]>
+</Description>
+</Parameter>
+<Parameter Name="EnableOut" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[Enable Output - System Defined Parameter]]>
+</Description>
+</Parameter>
+<Parameter Name="Connection" TagType="Base" DataType="EFX_MBS_CONN" Usage="InOut" Required="true" Visible="true" Constant="false"/>
+<Parameter Name="Data" TagType="Base" DataType="INT" Dimensions="2" Usage="InOut" Radix="Decimal" Required="true" Visible="true" Constant="false"/>
+</Parameters>
+<LocalTags>
+<LocalTag Name="ValidStartAddress" DataType="BOOL" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="HeaderOffset" DataType="INT" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="INT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="DataBytes" DataType="INT" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="INT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="DataOffset" DataType="DINT" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="LocalArrayIndex" DataType="DINT" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="DataValue" DataType="INT" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="INT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="TempIntData" DataType="INT" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="INT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="i" DataType="DINT" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+</LocalTags>
+<Routines>
+<Routine Name="Logic" Type="ST">
+<STContent>
+<Line Number="0">
+<![CDATA[/******************************************************************************************]]>
+</Line>
+<Line Number="1">
+<![CDATA[***]]>
+</Line>
+<Line Number="2">
+<![CDATA[***                                   ====================]]>
+</Line>
+<Line Number="3">
+<![CDATA[***                                   CMD 6 REQUEST PACKET]]>
+</Line>
+<Line Number="4">
+<![CDATA[***                                   ====================]]>
+</Line>
+<Line Number="5">
+<![CDATA[***]]>
+</Line>
+<Line Number="6">
+<![CDATA[***   |  00  |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |  11  |]]>
+</Line>
+<Line Number="7">
+<![CDATA[***   -------------------------------------------------------------------------------------]]>
+</Line>
+<Line Number="8">
+<![CDATA[***   | TRANSACTION | PROTOCOL ID |  MSG LENGTH | UNIT | FUNC | START  ADDR |  REG VALUE  |]]>
+</Line>
+<Line Number="9">
+<![CDATA[***]]>
+</Line>
+<Line Number="10">
+<![CDATA[***]]>
+</Line>
+<Line Number="11">
+<![CDATA[***                                   =====================]]>
+</Line>
+<Line Number="12">
+<![CDATA[***                                   CMD 6 RESPONSE PACKET]]>
+</Line>
+<Line Number="13">
+<![CDATA[***                                   =====================]]>
+</Line>
+<Line Number="14">
+<![CDATA[***]]>
+</Line>
+<Line Number="15">
+<![CDATA[***   |  00  |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |  11  |]]>
+</Line>
+<Line Number="16">
+<![CDATA[***   -------------------------------------------------------------------------------------]]>
+</Line>
+<Line Number="17">
+<![CDATA[***   | TRANSACTION | PROTOCOL ID |  MSG LENGTH | UNIT | FUNC | START  ADDR |  REG VALUE  |]]>
+</Line>
+<Line Number="18">
+<![CDATA[***]]>
+</Line>
+<Line Number="19">
+<![CDATA[***]]>
+</Line>
+<Line Number="20">
+<![CDATA[***]]>
+</Line>
+<Line Number="21">
+<![CDATA[***   ///////////////////////////////////////////////////////////////////////////////////////////////////]]>
+</Line>
+<Line Number="22">
+<![CDATA[***]]>
+</Line>
+<Line Number="23">
+<![CDATA[***]]>
+</Line>
+<Line Number="24">
+<![CDATA[***                                   =====================]]>
+</Line>
+<Line Number="25">
+<![CDATA[***                                   CMD 16 REQUEST PACKET]]>
+</Line>
+<Line Number="26">
+<![CDATA[***                                   =====================]]>
+</Line>
+<Line Number="27">
+<![CDATA[***]]>
+</Line>
+<Line Number="28">
+<![CDATA[***   |  00  |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |  11  |  12  |  13+ |]]>
+</Line>
+<Line Number="29">
+<![CDATA[***   ---------------------------------------------------------------------------------------------------]]>
+</Line>
+<Line Number="30">
+<![CDATA[***   | TRANSACTION | PROTOCOL ID |  MSG LENGTH | UNIT | FUNC | START  ADDR |  REG COUNT  | BYTES| DATA |]]>
+</Line>
+<Line Number="31">
+<![CDATA[***]]>
+</Line>
+<Line Number="32">
+<![CDATA[***]]>
+</Line>
+<Line Number="33">
+<![CDATA[***                                   ======================]]>
+</Line>
+<Line Number="34">
+<![CDATA[***                                   CMD 16 RESPONSE PACKET]]>
+</Line>
+<Line Number="35">
+<![CDATA[***                                   ======================]]>
+</Line>
+<Line Number="36">
+<![CDATA[***]]>
+</Line>
+<Line Number="37">
+<![CDATA[***   |  00  |  01  |  02  |  03  |  04  |  05  |  06  |  07  |  08  |  09  |  10  |  11  |]]>
+</Line>
+<Line Number="38">
+<![CDATA[***   -------------------------------------------------------------------------------------]]>
+</Line>
+<Line Number="39">
+<![CDATA[***   | TRANSACTION | PROTOCOL ID |  MSG LENGTH | UNIT | FUNC | START  ADDR |  REG COUNT  |]]>
+</Line>
+<Line Number="40">
+<![CDATA[***]]>
+</Line>
+<Line Number="41">
+<![CDATA[***   NOTES:]]>
+</Line>
+<Line Number="42">
+<![CDATA[***   1. BYTES = 2 BYTES * NUM OF REGISTERS RETURNED]]>
+</Line>
+<Line Number="43">
+<![CDATA[***   2. DATA = BYTES REQUIRED FOR ALL REQUESTED DATA]]>
+</Line>
+<Line Number="44">
+<![CDATA[***]]>
+</Line>
+<Line Number="45">
+<![CDATA[*********************************************************************************************/]]>
+</Line>
+<Line Number="46">
+<![CDATA[]]>
+</Line>
+<Line Number="47">
+<![CDATA[ValidStartAddress := (Connection.CommandInfo.StartAddress > 0) AND (Connection.CommandInfo.StartAddress <= 999);]]>
+</Line>
+<Line Number="48">
+<![CDATA[]]>
+</Line>
+<Line Number="49">
+<![CDATA[//Write Data Header Information]]>
+</Line>
+<Line Number="50">
+<![CDATA[COP(Connection.CommandInfo.Transaction, Connection.WriteData.Buffer.DATA[0], 2);]]>
+</Line>
+<Line Number="51">
+<![CDATA[COP(Connection.CommandInfo.Protocol, Connection.WriteData.Buffer.DATA[2], 2);]]>
+</Line>
+<Line Number="52">
+<![CDATA[COP(Connection.CommandInfo.Unit, Connection.WriteData.Buffer.DATA[6], 1);]]>
+</Line>
+<Line Number="53">
+<![CDATA[COP(Connection.CommandInfo.Function, Connection.WriteData.Buffer.DATA[7], 1);]]>
+</Line>
+<Line Number="54">
+<![CDATA[]]>
+</Line>
+<Line Number="55">
+<![CDATA[HeaderOffset := 8;]]>
+</Line>
+<Line Number="56">
+<![CDATA[DataOffset := HeaderOffset + 2;]]>
+</Line>
+<Line Number="57">
+<![CDATA[]]>
+</Line>
+<Line Number="58">
+<![CDATA[IF (Connection.CommandInfo.Function = 6) THEN]]>
+</Line>
+<Line Number="59">
+<![CDATA[	COP(Connection.ReadData.Buf.DATA[DataOffset], DataValue, 1);	//Get the value to be written from the request]]>
+</Line>
+<Line Number="60">
+<![CDATA[	SWPB(DataValue, REVERSE, DataValue);]]>
+</Line>
+<Line Number="61">
+<![CDATA[	LocalArrayIndex := Connection.CommandInfo.StartAddress - 1;		//Get the index for the data array]]>
+</Line>
+<Line Number="62">
+<![CDATA[	COP(DataValue, Data[LocalArrayIndex], 1);						//Write the value to the data array]]>
+</Line>
+<Line Number="63">
+<![CDATA[]]>
+</Line>
+<Line Number="64">
+<![CDATA[	//Create the Response]]>
+</Line>
+<Line Number="65">
+<![CDATA[	COP(Connection.CommandInfo.StartAddress, Connection.WriteData.Buffer.DATA[DataOffset + 0], 2);]]>
+</Line>
+<Line Number="66">
+<![CDATA[	SWPB(DataValue, REVERSE, TempIntData);]]>
+</Line>
+<Line Number="67">
+<![CDATA[	COP(TempIntData, Connection.WriteData.Buffer.DATA[DataOffset + 2], 2);]]>
+</Line>
+<Line Number="68">
+<![CDATA[	Connection.WriteData.Buffer.LEN := 12;]]>
+</Line>
+<Line Number="69">
+<![CDATA[ELSIF (Connection.CommandInfo.Function = 16) THEN]]>
+</Line>
+<Line Number="70">
+<![CDATA[	DataBytes := Connection.ReadData.Buf.DATA[HeaderOffset + 4];]]>
+</Line>
+<Line Number="71">
+<![CDATA[	]]>
+</Line>
+<Line Number="72">
+<![CDATA[	LocalArrayIndex := Connection.CommandInfo.StartAddress - 1;]]>
+</Line>
+<Line Number="73">
+<![CDATA[	DataOffset := HeaderOffset + 5;]]>
+</Line>
+<Line Number="74">
+<![CDATA[	FOR i := 0 TO (DataBytes - 1) BY 2 DO]]>
+</Line>
+<Line Number="75">
+<![CDATA[		COP(Connection.ReadData.Buf.DATA[DataOffset + i], TempIntData, 1);]]>
+</Line>
+<Line Number="76">
+<![CDATA[		SWPB(TempIntData, REVERSE, TempIntData);]]>
+</Line>
+<Line Number="77">
+<![CDATA[		COP(TempIntData, Data[LocalArrayIndex], 1);]]>
+</Line>
+<Line Number="78">
+<![CDATA[		LocalArrayIndex := LocalArrayIndex + 1;]]>
+</Line>
+<Line Number="79">
+<![CDATA[	END_FOR;]]>
+</Line>
+<Line Number="80">
+<![CDATA[]]>
+</Line>
+<Line Number="81">
+<![CDATA[	//Start Address for Response]]>
+</Line>
+<Line Number="82">
+<![CDATA[	TempIntData := Connection.CommandInfo.StartAddress - 1;]]>
+</Line>
+<Line Number="83">
+<![CDATA[	SWPB(TempIntData, REVERSE, TempIntData);]]>
+</Line>
+<Line Number="84">
+<![CDATA[	COP(TempIntData, Connection.WriteData.Buffer.DATA[HeaderOffset + 0], 2);]]>
+</Line>
+<Line Number="85">
+<![CDATA[]]>
+</Line>
+<Line Number="86">
+<![CDATA[	//Register Count for Response]]>
+</Line>
+<Line Number="87">
+<![CDATA[	SWPB(Connection.CommandInfo.RegisterCount, REVERSE, TempIntData);]]>
+</Line>
+<Line Number="88">
+<![CDATA[	COP(TempIntData, Connection.WriteData.Buffer.DATA[HeaderOffset + 2], 2);]]>
+</Line>
+<Line Number="89">
+<![CDATA[	Connection.WriteData.Buffer.LEN := 12;]]>
+</Line>
+<Line Number="90">
+<![CDATA[END_IF;]]>
+</Line>
+<Line Number="91">
+<![CDATA[]]>
+</Line>
+<Line Number="92">
+<![CDATA[//Signal Response is Ready for Sending]]>
+</Line>
+<Line Number="93">
+<![CDATA[Connection.WriteRequired := 1;]]>
+</Line>
+<Line Number="94">
+<![CDATA[]]>
+</Line>
+<Line Number="95">
+<![CDATA[//Clear Read Buffer]]>
+</Line>
+<Line Number="96">
+<![CDATA[Connection.ReadBuffer.LEN := 0;]]>
+</Line>
+</STContent>
+</Routine>
+</Routines>
+<Dependencies>
+<Dependency Type="DataType" Name="EFX_MBS_CONN"/>
+</Dependencies>
+</AddOnInstructionDefinition>
+<AddOnInstructionDefinition Name="EFX_MBS_WRITE_STATUS" Revision="1.0" Vendor="Enerflex, Ltd." ExecutePrescan="false" ExecutePostscan="false" ExecuteEnableInFalse="false" CreatedDate="2015-03-05T17:34:43.300Z" CreatedBy="ENERFLEX\jbernard" EditedDate="2017-10-19T20:42:13.525Z" EditedBy="ENERFLEX\JBernard" SoftwareRevision="v20.04"
+>
+<Description>
+<![CDATA[Process Input Status write commands from a Modbus master]]>
+</Description>
+<Parameters>
+<Parameter Name="EnableIn" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[Enable Input - System Defined Parameter]]>
+</Description>
+</Parameter>
+<Parameter Name="EnableOut" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[Enable Output - System Defined Parameter]]>
+</Description>
+</Parameter>
+<Parameter Name="Connection" TagType="Base" DataType="EFX_MBS_CONN" Usage="InOut" Required="true" Visible="true" Constant="false"/>
+<Parameter Name="Data" TagType="Base" DataType="INT" Dimensions="64" Usage="InOut" Radix="Decimal" Required="true" Visible="true" Constant="false"/>
+</Parameters>
+<LocalTags>
+<LocalTag Name="DataLength" DataType="DINT" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="BufferIndex" DataType="INT" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="INT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="StartBit" DataType="INT" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="INT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="CoilValue" DataType="BOOL" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="BitMask" DataType="INT" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="INT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="DataOffset" DataType="INT" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="INT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="DataCheck" DataType="BOOL" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="DataBytes" DataType="DINT" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="LocalArrayIndex" DataType="DINT" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="LocalArrayBit" DataType="SINT" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="SINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="PayloadBit" DataType="SINT" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="SINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="PayloadIndex" DataType="DINT" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="i" DataType="DINT" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+</LocalTags>
+<Routines>
+<Routine Name="Logic" Type="ST">
+<STContent>
+<Line Number="0">
+<![CDATA[/***************************************************]]>
+</Line>
+<Line Number="1">
+<![CDATA[***              FORCE SINGLE COIL               ***]]>
+</Line>
+<Line Number="2">
+<![CDATA[***************************************************/]]>
+</Line>
+<Line Number="3">
+<![CDATA[IF (Connection.CommandInfo.Function = 5) THEN]]>
+</Line>
+<Line Number="4">
+<![CDATA[	BufferIndex := (Connection.CommandInfo.StartAddress - 1) / 16;]]>
+</Line>
+<Line Number="5">
+<![CDATA[	StartBit := (Connection.CommandInfo.StartAddress - 1) - (BufferIndex * 16);]]>
+</Line>
+<Line Number="6">
+<![CDATA[	CoilValue := (Connection.CommandInfo.RegisterCount <> 0);]]>
+</Line>
+<Line Number="7">
+<![CDATA[]]>
+</Line>
+<Line Number="8">
+<![CDATA[	IF (CoilValue) THEN]]>
+</Line>
+<Line Number="9">
+<![CDATA[		BitMask := (2 ** StartBit);]]>
+</Line>
+<Line Number="10">
+<![CDATA[		Data[BufferIndex] := Data[BufferIndex] OR BitMask;]]>
+</Line>
+<Line Number="11">
+<![CDATA[	ELSE]]>
+</Line>
+<Line Number="12">
+<![CDATA[		BitMask := NOT (2 ** StartBit);]]>
+</Line>
+<Line Number="13">
+<![CDATA[		Data[BufferIndex] := Data[BufferIndex] AND BitMask;]]>
+</Line>
+<Line Number="14">
+<![CDATA[	END_IF;]]>
+</Line>
+<Line Number="15">
+<![CDATA[]]>
+</Line>
+<Line Number="16">
+<![CDATA[]]>
+</Line>
+<Line Number="17">
+<![CDATA[	//Repeat request back to master]]>
+</Line>
+<Line Number="18">
+<![CDATA[	DataLength := Connection.CommandInfo.Length + 6;]]>
+</Line>
+<Line Number="19">
+<![CDATA[	COP(Connection.CommandInfo.Data[0], Connection.WriteData.Buffer.DATA[0], DataLength);]]>
+</Line>
+<Line Number="20">
+<![CDATA[	Connection.WriteData.Buffer.LEN := 12;]]>
+</Line>
+<Line Number="21">
+<![CDATA[END_IF;]]>
+</Line>
+<Line Number="22">
+<![CDATA[]]>
+</Line>
+<Line Number="23">
+<![CDATA[/***************************************************]]>
+</Line>
+<Line Number="24">
+<![CDATA[***            FORCE MULTIPLE COILS              ***]]>
+</Line>
+<Line Number="25">
+<![CDATA[***************************************************/]]>
+</Line>
+<Line Number="26">
+<![CDATA[IF (Connection.CommandInfo.Function = 15) THEN]]>
+</Line>
+<Line Number="27">
+<![CDATA[	//Initialization Items]]>
+</Line>
+<Line Number="28">
+<![CDATA[	DataBytes := Connection.ReadBuffer.DATA[12];]]>
+</Line>
+<Line Number="29">
+<![CDATA[	DataOffset := 13;]]>
+</Line>
+<Line Number="30">
+<![CDATA[]]>
+</Line>
+<Line Number="31">
+<![CDATA[	PayloadIndex := 0;]]>
+</Line>
+<Line Number="32">
+<![CDATA[	PayloadBit := 0;]]>
+</Line>
+<Line Number="33">
+<![CDATA[	LocalArrayIndex := (Connection.CommandInfo.StartAddress - 1) / 16;]]>
+</Line>
+<Line Number="34">
+<![CDATA[	LocalArrayBit := (Connection.CommandInfo.StartAddress - 1) MOD 16;]]>
+</Line>
+<Line Number="35">
+<![CDATA[]]>
+</Line>
+<Line Number="36">
+<![CDATA[	//Verify number of bytes is correct]]>
+</Line>
+<Line Number="37">
+<![CDATA[	DataCheck := (DataBytes = ((Connection.CommandInfo.RegisterCount + 7) / 8));]]>
+</Line>
+<Line Number="38">
+<![CDATA[]]>
+</Line>
+<Line Number="39">
+<![CDATA[	FOR i := 0 TO Connection.CommandInfo.RegisterCount BY 1 DO]]>
+</Line>
+<Line Number="40">
+<![CDATA[		Data[LocalArrayIndex].[LocalArrayBit] := Connection.ReadBuffer.DATA[DataOffset + PayloadIndex].[PayloadBit];]]>
+</Line>
+<Line Number="41">
+<![CDATA[]]>
+</Line>
+<Line Number="42">
+<![CDATA[		IF (PayloadBit = 7) THEN]]>
+</Line>
+<Line Number="43">
+<![CDATA[			PayloadBit := 0;]]>
+</Line>
+<Line Number="44">
+<![CDATA[			PayloadIndex := PayloadIndex + 1;]]>
+</Line>
+<Line Number="45">
+<![CDATA[		ELSE]]>
+</Line>
+<Line Number="46">
+<![CDATA[			PayloadBit := PayloadBit + 1;]]>
+</Line>
+<Line Number="47">
+<![CDATA[		END_IF;]]>
+</Line>
+<Line Number="48">
+<![CDATA[]]>
+</Line>
+<Line Number="49">
+<![CDATA[		IF (LocalArrayBit = 15) THEN]]>
+</Line>
+<Line Number="50">
+<![CDATA[			LocalArrayBit := 0;]]>
+</Line>
+<Line Number="51">
+<![CDATA[			LocalArrayIndex := LocalArrayIndex + 1;]]>
+</Line>
+<Line Number="52">
+<![CDATA[		ELSE]]>
+</Line>
+<Line Number="53">
+<![CDATA[			LocalArrayBit := LocalArrayBit + 1;]]>
+</Line>
+<Line Number="54">
+<![CDATA[		END_IF;]]>
+</Line>
+<Line Number="55">
+<![CDATA[	END_FOR;]]>
+</Line>
+<Line Number="56">
+<![CDATA[	]]>
+</Line>
+<Line Number="57">
+<![CDATA[	DataLength := 12;]]>
+</Line>
+<Line Number="58">
+<![CDATA[	COP(Connection.ReadBuffer.DATA[0], Connection.WriteData.Buffer.DATA[0], DataLength);]]>
+</Line>
+<Line Number="59">
+<![CDATA[	Connection.WriteData.Buffer.DATA[5] := 6;]]>
+</Line>
+<Line Number="60">
+<![CDATA[	Connection.WriteData.Buffer.LEN := 12;]]>
+</Line>
+<Line Number="61">
+<![CDATA[END_IF;]]>
+</Line>
+<Line Number="62">
+<![CDATA[]]>
+</Line>
+<Line Number="63">
+<![CDATA[Connection.WriteRequired := 1;]]>
+</Line>
+<Line Number="64">
+<![CDATA[Connection.ReadBuffer.LEN := 0;]]>
+</Line>
+</STContent>
+</Routine>
+</Routines>
+<Dependencies>
+<Dependency Type="DataType" Name="EFX_MBS_CONN"/>
+</Dependencies>
+</AddOnInstructionDefinition>
+<AddOnInstructionDefinition Use="Target" Name="EFX_MB_SLAVE" Revision="1.0" Vendor="Enerflex, Ltd." ExecutePrescan="false" ExecutePostscan="false" ExecuteEnableInFalse="false" CreatedDate="2015-02-12T22:29:42.421Z" CreatedBy="ENERFLEX\JBernard" EditedDate="2017-10-20T19:46:42.800Z" EditedBy="ENERFLEX\JBernard"
+ SoftwareRevision="v20.04">
+<Parameters>
+<Parameter Name="EnableIn" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[Enable Input - System Defined Parameter]]>
+</Description>
+</Parameter>
+<Parameter Name="EnableOut" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[Enable Output - System Defined Parameter]]>
+</Description>
+</Parameter>
+<Parameter Name="StartDelay" TagType="Base" DataType="DINT" Usage="Input" Radix="Decimal" Required="false" Visible="true" ExternalAccess="Read Only">
+<DefaultData>0A 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="10"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="Ready" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="true" ExternalAccess="Read Only">
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="SocketCreated" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="true" ExternalAccess="Read Only">
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="AcceptTimeoutSet" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="true" ExternalAccess="Read Only">
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="ConnAccepted" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="true" ExternalAccess="Read Only">
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="InactivityTimeoutSet" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="true" ExternalAccess="Read Only">
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="Connected" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="true" ExternalAccess="Read Only">
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="Error" TagType="Base" DataType="BOOL" Usage="Output" Radix="Decimal" Required="false" Visible="true" ExternalAccess="Read Only">
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="Fault" TagType="Base" DataType="INT" Usage="Output" Radix="Decimal" Required="false" Visible="true" ExternalAccess="Read Only">
+<DefaultData>00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="INT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="Enable" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="true" ExternalAccess="Read Only">
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="EthernetSlot" TagType="Base" DataType="INT" Usage="Input" Radix="Decimal" Required="false" Visible="true" ExternalAccess="Read Only">
+<DefaultData>00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="INT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="TcpPort" TagType="Base" DataType="INT" Usage="Input" Radix="Decimal" Required="false" Visible="true" ExternalAccess="Read Only">
+<Description>
+<![CDATA[TCP Port to listen for Modbus master requests]]>
+</Description>
+<DefaultData>F6 01</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="INT" Radix="Decimal" Value="502"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="CoilStatus" TagType="Base" DataType="INT" Dimensions="64" Usage="InOut" Radix="Decimal" Required="true" Visible="true" Constant="false">
+<Description>
+<![CDATA[Data array for reading/writing Output coil values]]>
+</Description>
+</Parameter>
+<Parameter Name="InputStatus" TagType="Base" DataType="INT" Dimensions="64" Usage="InOut" Radix="Decimal" Required="true" Visible="true" Constant="false">
+<Description>
+<![CDATA[Data array for reading descrete input values.]]>
+</Description>
+</Parameter>
+<Parameter Name="HoldingRegister" TagType="Base" DataType="INT" Dimensions="2" Usage="InOut" Radix="Decimal" Required="true" Visible="true" Constant="false">
+<Description>
+<![CDATA[Data array for reading Input Register values.]]>
+</Description>
+</Parameter>
+<Parameter Name="InputRegister" TagType="Base" DataType="INT" Dimensions="2" Usage="InOut" Radix="Decimal" Required="true" Visible="true" Constant="false">
+<Description>
+<![CDATA[Data array for reading/writting Holding register values.]]>
+</Description>
+</Parameter>
+<Parameter Name="MsgDeleteAll" TagType="Base" DataType="MESSAGE" Usage="InOut" Required="true" Visible="true">
+<Description>
+<![CDATA[Message to close any sockets left open by previous operations.
+Message Type: CIP Generic
+Service Type: Custom
+Service Code: 51
+Class: 342
+Instance: 0
+Attribute: 0
+Source Element: Empty
+Source Length: 0
+Destination Element: Empty]]>
+</Description>
+</Parameter>
+<Parameter Name="MsgCreateSocket" TagType="Base" DataType="MESSAGE" Usage="InOut" Required="true" Visible="true">
+<Description>
+<![CDATA[Message to create sockets]]>
+</Description>
+</Parameter>
+<Parameter Name="MsgConnAcceptTimeout" TagType="Base" DataType="MESSAGE" Usage="InOut" Required="true" Visible="true">
+<Description>
+<![CDATA[Message to modify the connection timeout]]>
+</Description>
+</Parameter>
+<Parameter Name="MsgConnAccept" TagType="Base" DataType="MESSAGE" Usage="InOut" Required="true" Visible="true">
+<Description>
+<![CDATA[Message to accept incoming connections]]>
+</Description>
+</Parameter>
+<Parameter Name="MsgSocketInactivityTimeout" TagType="Base" DataType="MESSAGE" Usage="InOut" Required="true" Visible="true">
+<Description>
+<![CDATA[Message to modify the inactivity timeout on newly opened sockets]]>
+</Description>
+</Parameter>
+<Parameter Name="MsgChangeLoggingOptions" TagType="Base" DataType="MESSAGE" Usage="InOut" Required="true" Visible="true">
+<Description>
+<![CDATA[Message to modify the logging options]]>
+</Description>
+</Parameter>
+<Parameter Name="MsgReadData" TagType="Base" DataType="MESSAGE" Usage="InOut" Required="true" Visible="true"/>
+<Parameter Name="MsgWriteData" TagType="Base" DataType="MESSAGE" Usage="InOut" Required="true" Visible="true"/>
+<Parameter Name="pSocketParams" TagType="Alias" Usage="Input" Radix="Decimal" AliasFor="SocketParameters.Type" Required="false" Visible="false" ExternalAccess="None">
+<Description>
+<![CDATA[Pointer to SocketParams local tag]]>
+</Description>
+</Parameter>
+<Parameter Name="pSocketInstance" TagType="Alias" Usage="Input" Radix="Decimal" AliasFor="SocketInstance" Required="false" Visible="false" ExternalAccess="None">
+<Description>
+<![CDATA[Pointer to SocketInstance local tag]]>
+</Description>
+</Parameter>
+<Parameter Name="pInactivityTimeout" TagType="Alias" Usage="Input" Radix="Decimal" AliasFor="InactivityTimeout" Required="false" Visible="false" ExternalAccess="None">
+<Description>
+<![CDATA[Pointer to InactivityTimeout local tag]]>
+</Description>
+</Parameter>
+<Parameter Name="pTotalOpenSockets" TagType="Alias" Usage="Input" Radix="Decimal" AliasFor="TotalOpenSockets" Required="false" Visible="false" ExternalAccess="Read Only">
+<Description>
+<![CDATA[Pointer to TotalOpenSockets local tag]]>
+</Description>
+</Parameter>
+<Parameter Name="pSocketAcceptTimeout" TagType="Alias" Usage="Input" Radix="Decimal" AliasFor="SocketAcceptTimeout" Required="false" Visible="false" ExternalAccess="None">
+<Description>
+<![CDATA[Pointer to SocketAcceptTimeout local tag]]>
+</Description>
+</Parameter>
+<Parameter Name="pSocketAcceptResponse" TagType="Alias" Usage="Input" Radix="Decimal" AliasFor="SocketAcceptResponse.Instance" Required="false" Visible="false" ExternalAccess="None">
+<Description>
+<![CDATA[Pointer to Resp_SocketAccept local tag]]>
+</Description>
+</Parameter>
+<Parameter Name="pReadWriteInactivity" TagType="Alias" Usage="Input" Radix="Decimal" AliasFor="ReadWriteInactivity" Required="false" Visible="false" ExternalAccess="None"/>
+<Parameter Name="pReadRequest" TagType="Alias" Usage="Input" Radix="Decimal" AliasFor="Connection.ReadRequest.Timeout" Required="false" Visible="false" ExternalAccess="Read Only"/>
+<Parameter Name="pReadResponse" TagType="Alias" Usage="Input" Radix="Decimal" AliasFor="Connection.ReadData.FromAddr.Family" Required="false" Visible="false" ExternalAccess="Read Only"/>
+<Parameter Name="pWriteRequest" TagType="Alias" Usage="Input" Radix="Decimal" AliasFor="Connection.WriteData.Timeout" Required="false" Visible="false" ExternalAccess="Read Only"/>
+<Parameter Name="pWriteResponse" TagType="Alias" Usage="Input" Radix="Decimal" AliasFor="Connection.WriteDataSent" Required="false" Visible="false" ExternalAccess="Read Only"/>
+<Parameter Name="LogOption_Create" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="None">
+<Description>
+<![CDATA[Socket Create Requests]]>
+</Description>
+<DefaultData>01</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="1"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="LogOption_Open" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="None">
+<Description>
+<![CDATA[Open Connection Requests]]>
+</Description>
+<DefaultData>01</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="1"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="LogOption_Accept" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="None">
+<Description>
+<![CDATA[Accept Connection Requests]]>
+</Description>
+<DefaultData>01</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="1"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="LogOption_Read" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="None">
+<Description>
+<![CDATA[Read Requests]]>
+</Description>
+<DefaultData>01</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="1"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="LogOption_Write" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="None">
+<Description>
+<![CDATA[Write Requests]]>
+</Description>
+<DefaultData>01</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="1"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="LogOption_Delete" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="None">
+<Description>
+<![CDATA[Delete Socket Requests]]>
+</Description>
+<DefaultData>01</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="1"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="LogOption_Attribute" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="None">
+<Description>
+<![CDATA[Get/Set Attribute Requests]]>
+</Description>
+<DefaultData>01</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="1"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="LogOption_Errors" TagType="Base" DataType="BOOL" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="None">
+<Description>
+<![CDATA[Log All Service Errors]]>
+</Description>
+<DefaultData>01</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="1"/>
+</DefaultData>
+</Parameter>
+<Parameter Name="LogOptions" TagType="Base" DataType="DINT" Usage="Input" Radix="Decimal" Required="false" Visible="false" ExternalAccess="None">
+<DefaultData>FF 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="255"/>
+</DefaultData>
+</Parameter>
+</Parameters>
+<LocalTags>
+<LocalTag Name="Tmr_StartDelay" DataType="FBD_TIMER" ExternalAccess="None">
+<DefaultData>01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 04 00 00 00 00 00 00 00 00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<Structure DataType="FBD_TIMER">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="TimerEnable" DataType="BOOL" Value="0"/>
+<DataValueMember Name="PRE" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="Reset" DataType="BOOL" Value="0"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="ACC" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="EN" DataType="BOOL" Value="0"/>
+<DataValueMember Name="TT" DataType="BOOL" Value="0"/>
+<DataValueMember Name="DN" DataType="BOOL" Value="0"/>
+<DataValueMember Name="Status" DataType="DINT" Radix="Hex" Value="16#0000_0000"/>
+<DataValueMember Name="InstructFault" DataType="BOOL" Value="0"/>
+<DataValueMember Name="PresetInv" DataType="BOOL" Value="0"/>
+</Structure>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="Tmr_Runtime" DataType="FBD_TIMER" ExternalAccess="None">
+<DefaultData>01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 04 00 00 00 00 00 00 00 00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<Structure DataType="FBD_TIMER">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="TimerEnable" DataType="BOOL" Value="0"/>
+<DataValueMember Name="PRE" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="Reset" DataType="BOOL" Value="0"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="ACC" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="EN" DataType="BOOL" Value="0"/>
+<DataValueMember Name="TT" DataType="BOOL" Value="0"/>
+<DataValueMember Name="DN" DataType="BOOL" Value="0"/>
+<DataValueMember Name="Status" DataType="DINT" Radix="Hex" Value="16#0000_0000"/>
+<DataValueMember Name="InstructFault" DataType="BOOL" Value="0"/>
+<DataValueMember Name="PresetInv" DataType="BOOL" Value="0"/>
+</Structure>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="EnetModulePort" DataType="STRING" ExternalAccess="None">
+<Description>
+<![CDATA[Path to the Ethernet port used for the application.  This will be written into all the CIP message blocks during initialization.]]>
+</Description>
+<DefaultData>02 00 00 00 01 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00</DefaultData>
+<DefaultData Format="String" Length="2">
+<![CDATA['$01$00']]>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="MaxConnections" DataType="DINT" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="ForLoopIndex" DataType="DINT" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="Tmr_RetryCreateSocket" DataType="FBD_TIMER" ExternalAccess="None">
+<DefaultData>03 00 00 00 00 00 00 00 D0 07 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 04 00 00 00 00 00 00 00 00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<Structure DataType="FBD_TIMER">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="TimerEnable" DataType="BOOL" Value="1"/>
+<DataValueMember Name="PRE" DataType="DINT" Radix="Decimal" Value="2000"/>
+<DataValueMember Name="Reset" DataType="BOOL" Value="0"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="ACC" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="EN" DataType="BOOL" Value="0"/>
+<DataValueMember Name="TT" DataType="BOOL" Value="0"/>
+<DataValueMember Name="DN" DataType="BOOL" Value="0"/>
+<DataValueMember Name="Status" DataType="DINT" Radix="Hex" Value="16#0000_0000"/>
+<DataValueMember Name="InstructFault" DataType="BOOL" Value="0"/>
+<DataValueMember Name="PresetInv" DataType="BOOL" Value="0"/>
+</Structure>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="LostListenSocket" DataType="BOOL" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="BOOL" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="SocketInstance" DataType="DINT" Radix="Decimal" ExternalAccess="None">
+<Description>
+<![CDATA[Used to store the instance of a socket when created]]>
+</Description>
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="TotalOpenSockets" DataType="INT" Radix="Decimal" ExternalAccess="Read Only">
+<DefaultData>00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="INT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="SocketAcceptResponse" DataType="TCP_ACCEPT_RESP" ExternalAccess="None">
+<DefaultData>00 00 00 00 00 00 00 00 00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<Structure DataType="TCP_ACCEPT_RESP">
+<DataValueMember Name="Instance" DataType="DINT" Radix="Decimal" Value="0"/>
+<StructureMember Name="Addr" DataType="TCP_SOCKET_ADDRESS">
+<DataValueMember Name="Family" DataType="INT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="Port" DataType="INT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="Addr" DataType="DINT" Radix="Decimal" Value="0"/>
+</StructureMember>
+</Structure>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="OldLogOptions" DataType="DINT" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="Connection" DataType="EFX_MBS_CONN" ExternalAccess="Read Only">
+<DefaultData>00 00 00 00 00 00 00 00 D0 07 00 00 E4 01 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 01 00 00 00 
+00 00 00 00 01 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 02 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 01 00 00 00 00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<Structure DataType="EFX_MBS_CONN">
+<DataValueMember Name="SocketInstance" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="Open" DataType="BOOL" Value="0"/>
+<StructureMember Name="ReadRequest" DataType="TCP_READ_PARAM">
+<DataValueMember Name="Timeout" DataType="DINT" Radix="Decimal" Value="2000"/>
+<DataValueMember Name="BufLen" DataType="DINT" Radix="Decimal" Value="484"/>
+</StructureMember>
+<StructureMember Name="ReadData" DataType="TCP_READ_RESP">
+<StructureMember Name="FromAddr" DataType="TCP_SOCKET_ADDRESS">
+<DataValueMember Name="Family" DataType="INT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="Port" DataType="INT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="Addr" DataType="DINT" Radix="Decimal" Value="0"/>
+</StructureMember>
+<StructureMember Name="Buf" DataType="STRING480">
+<DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="DATA" DataType="STRING480" Radix="ASCII">
+<![CDATA[]]>
+</DataValueMember>
+</StructureMember>
+</StructureMember>
+<StructureMember Name="ReadBuffer" DataType="STRING4096">
+<DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="DATA" DataType="STRING4096" Radix="ASCII">
+<![CDATA[]]>
+</DataValueMember>
+</StructureMember>
+<DataValueMember Name="ReadComplete" DataType="BOOL" Value="0"/>
+<StructureMember Name="CommandInfo" DataType="EFX_MBS_REQ_PKT_INFO">
+<DataValueMember Name="Transaction" DataType="INT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="Protocol" DataType="INT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="Length" DataType="INT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="Unit" DataType="SINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="Function" DataType="SINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="StartAddress" DataType="INT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="RegisterCount" DataType="INT" Radix="Decimal" Value="0"/>
+<ArrayMember Name="Data" DataType="SINT" Dimensions="462" Radix="Decimal">
+<Element Index="[0]" Value="0"/>
+<Element Index="[1]" Value="0"/>
+<Element Index="[2]" Value="0"/>
+<Element Index="[3]" Value="0"/>
+<Element Index="[4]" Value="0"/>
+<Element Index="[5]" Value="0"/>
+<Element Index="[6]" Value="0"/>
+<Element Index="[7]" Value="0"/>
+<Element Index="[8]" Value="0"/>
+<Element Index="[9]" Value="0"/>
+<Element Index="[10]" Value="0"/>
+<Element Index="[11]" Value="0"/>
+<Element Index="[12]" Value="0"/>
+<Element Index="[13]" Value="0"/>
+<Element Index="[14]" Value="0"/>
+<Element Index="[15]" Value="0"/>
+<Element Index="[16]" Value="0"/>
+<Element Index="[17]" Value="0"/>
+<Element Index="[18]" Value="0"/>
+<Element Index="[19]" Value="0"/>
+<Element Index="[20]" Value="0"/>
+<Element Index="[21]" Value="0"/>
+<Element Index="[22]" Value="0"/>
+<Element Index="[23]" Value="0"/>
+<Element Index="[24]" Value="0"/>
+<Element Index="[25]" Value="0"/>
+<Element Index="[26]" Value="0"/>
+<Element Index="[27]" Value="0"/>
+<Element Index="[28]" Value="0"/>
+<Element Index="[29]" Value="0"/>
+<Element Index="[30]" Value="0"/>
+<Element Index="[31]" Value="0"/>
+<Element Index="[32]" Value="0"/>
+<Element Index="[33]" Value="0"/>
+<Element Index="[34]" Value="0"/>
+<Element Index="[35]" Value="0"/>
+<Element Index="[36]" Value="0"/>
+<Element Index="[37]" Value="0"/>
+<Element Index="[38]" Value="0"/>
+<Element Index="[39]" Value="0"/>
+<Element Index="[40]" Value="0"/>
+<Element Index="[41]" Value="0"/>
+<Element Index="[42]" Value="0"/>
+<Element Index="[43]" Value="0"/>
+<Element Index="[44]" Value="0"/>
+<Element Index="[45]" Value="0"/>
+<Element Index="[46]" Value="0"/>
+<Element Index="[47]" Value="0"/>
+<Element Index="[48]" Value="0"/>
+<Element Index="[49]" Value="0"/>
+<Element Index="[50]" Value="0"/>
+<Element Index="[51]" Value="0"/>
+<Element Index="[52]" Value="0"/>
+<Element Index="[53]" Value="0"/>
+<Element Index="[54]" Value="0"/>
+<Element Index="[55]" Value="0"/>
+<Element Index="[56]" Value="0"/>
+<Element Index="[57]" Value="0"/>
+<Element Index="[58]" Value="0"/>
+<Element Index="[59]" Value="0"/>
+<Element Index="[60]" Value="0"/>
+<Element Index="[61]" Value="0"/>
+<Element Index="[62]" Value="0"/>
+<Element Index="[63]" Value="0"/>
+<Element Index="[64]" Value="0"/>
+<Element Index="[65]" Value="0"/>
+<Element Index="[66]" Value="0"/>
+<Element Index="[67]" Value="0"/>
+<Element Index="[68]" Value="0"/>
+<Element Index="[69]" Value="0"/>
+<Element Index="[70]" Value="0"/>
+<Element Index="[71]" Value="0"/>
+<Element Index="[72]" Value="0"/>
+<Element Index="[73]" Value="0"/>
+<Element Index="[74]" Value="0"/>
+<Element Index="[75]" Value="0"/>
+<Element Index="[76]" Value="0"/>
+<Element Index="[77]" Value="0"/>
+<Element Index="[78]" Value="0"/>
+<Element Index="[79]" Value="0"/>
+<Element Index="[80]" Value="0"/>
+<Element Index="[81]" Value="0"/>
+<Element Index="[82]" Value="0"/>
+<Element Index="[83]" Value="0"/>
+<Element Index="[84]" Value="0"/>
+<Element Index="[85]" Value="0"/>
+<Element Index="[86]" Value="0"/>
+<Element Index="[87]" Value="0"/>
+<Element Index="[88]" Value="0"/>
+<Element Index="[89]" Value="0"/>
+<Element Index="[90]" Value="0"/>
+<Element Index="[91]" Value="0"/>
+<Element Index="[92]" Value="0"/>
+<Element Index="[93]" Value="0"/>
+<Element Index="[94]" Value="0"/>
+<Element Index="[95]" Value="0"/>
+<Element Index="[96]" Value="0"/>
+<Element Index="[97]" Value="0"/>
+<Element Index="[98]" Value="0"/>
+<Element Index="[99]" Value="0"/>
+<Element Index="[100]" Value="0"/>
+<Element Index="[101]" Value="0"/>
+<Element Index="[102]" Value="0"/>
+<Element Index="[103]" Value="0"/>
+<Element Index="[104]" Value="0"/>
+<Element Index="[105]" Value="0"/>
+<Element Index="[106]" Value="0"/>
+<Element Index="[107]" Value="0"/>
+<Element Index="[108]" Value="0"/>
+<Element Index="[109]" Value="0"/>
+<Element Index="[110]" Value="0"/>
+<Element Index="[111]" Value="0"/>
+<Element Index="[112]" Value="0"/>
+<Element Index="[113]" Value="0"/>
+<Element Index="[114]" Value="0"/>
+<Element Index="[115]" Value="0"/>
+<Element Index="[116]" Value="0"/>
+<Element Index="[117]" Value="0"/>
+<Element Index="[118]" Value="0"/>
+<Element Index="[119]" Value="0"/>
+<Element Index="[120]" Value="0"/>
+<Element Index="[121]" Value="0"/>
+<Element Index="[122]" Value="0"/>
+<Element Index="[123]" Value="0"/>
+<Element Index="[124]" Value="0"/>
+<Element Index="[125]" Value="0"/>
+<Element Index="[126]" Value="0"/>
+<Element Index="[127]" Value="0"/>
+<Element Index="[128]" Value="0"/>
+<Element Index="[129]" Value="0"/>
+<Element Index="[130]" Value="0"/>
+<Element Index="[131]" Value="0"/>
+<Element Index="[132]" Value="0"/>
+<Element Index="[133]" Value="0"/>
+<Element Index="[134]" Value="0"/>
+<Element Index="[135]" Value="0"/>
+<Element Index="[136]" Value="0"/>
+<Element Index="[137]" Value="0"/>
+<Element Index="[138]" Value="0"/>
+<Element Index="[139]" Value="0"/>
+<Element Index="[140]" Value="0"/>
+<Element Index="[141]" Value="0"/>
+<Element Index="[142]" Value="0"/>
+<Element Index="[143]" Value="0"/>
+<Element Index="[144]" Value="0"/>
+<Element Index="[145]" Value="0"/>
+<Element Index="[146]" Value="0"/>
+<Element Index="[147]" Value="0"/>
+<Element Index="[148]" Value="0"/>
+<Element Index="[149]" Value="0"/>
+<Element Index="[150]" Value="0"/>
+<Element Index="[151]" Value="0"/>
+<Element Index="[152]" Value="0"/>
+<Element Index="[153]" Value="0"/>
+<Element Index="[154]" Value="0"/>
+<Element Index="[155]" Value="0"/>
+<Element Index="[156]" Value="0"/>
+<Element Index="[157]" Value="0"/>
+<Element Index="[158]" Value="0"/>
+<Element Index="[159]" Value="0"/>
+<Element Index="[160]" Value="0"/>
+<Element Index="[161]" Value="0"/>
+<Element Index="[162]" Value="0"/>
+<Element Index="[163]" Value="0"/>
+<Element Index="[164]" Value="0"/>
+<Element Index="[165]" Value="0"/>
+<Element Index="[166]" Value="0"/>
+<Element Index="[167]" Value="0"/>
+<Element Index="[168]" Value="0"/>
+<Element Index="[169]" Value="0"/>
+<Element Index="[170]" Value="0"/>
+<Element Index="[171]" Value="0"/>
+<Element Index="[172]" Value="0"/>
+<Element Index="[173]" Value="0"/>
+<Element Index="[174]" Value="0"/>
+<Element Index="[175]" Value="0"/>
+<Element Index="[176]" Value="0"/>
+<Element Index="[177]" Value="0"/>
+<Element Index="[178]" Value="0"/>
+<Element Index="[179]" Value="0"/>
+<Element Index="[180]" Value="0"/>
+<Element Index="[181]" Value="0"/>
+<Element Index="[182]" Value="0"/>
+<Element Index="[183]" Value="0"/>
+<Element Index="[184]" Value="0"/>
+<Element Index="[185]" Value="0"/>
+<Element Index="[186]" Value="0"/>
+<Element Index="[187]" Value="0"/>
+<Element Index="[188]" Value="0"/>
+<Element Index="[189]" Value="0"/>
+<Element Index="[190]" Value="0"/>
+<Element Index="[191]" Value="0"/>
+<Element Index="[192]" Value="0"/>
+<Element Index="[193]" Value="0"/>
+<Element Index="[194]" Value="0"/>
+<Element Index="[195]" Value="0"/>
+<Element Index="[196]" Value="0"/>
+<Element Index="[197]" Value="0"/>
+<Element Index="[198]" Value="0"/>
+<Element Index="[199]" Value="0"/>
+<Element Index="[200]" Value="0"/>
+<Element Index="[201]" Value="0"/>
+<Element Index="[202]" Value="0"/>
+<Element Index="[203]" Value="0"/>
+<Element Index="[204]" Value="0"/>
+<Element Index="[205]" Value="0"/>
+<Element Index="[206]" Value="0"/>
+<Element Index="[207]" Value="0"/>
+<Element Index="[208]" Value="0"/>
+<Element Index="[209]" Value="0"/>
+<Element Index="[210]" Value="0"/>
+<Element Index="[211]" Value="0"/>
+<Element Index="[212]" Value="0"/>
+<Element Index="[213]" Value="0"/>
+<Element Index="[214]" Value="0"/>
+<Element Index="[215]" Value="0"/>
+<Element Index="[216]" Value="0"/>
+<Element Index="[217]" Value="0"/>
+<Element Index="[218]" Value="0"/>
+<Element Index="[219]" Value="0"/>
+<Element Index="[220]" Value="0"/>
+<Element Index="[221]" Value="0"/>
+<Element Index="[222]" Value="0"/>
+<Element Index="[223]" Value="0"/>
+<Element Index="[224]" Value="0"/>
+<Element Index="[225]" Value="0"/>
+<Element Index="[226]" Value="0"/>
+<Element Index="[227]" Value="0"/>
+<Element Index="[228]" Value="0"/>
+<Element Index="[229]" Value="0"/>
+<Element Index="[230]" Value="0"/>
+<Element Index="[231]" Value="0"/>
+<Element Index="[232]" Value="0"/>
+<Element Index="[233]" Value="0"/>
+<Element Index="[234]" Value="0"/>
+<Element Index="[235]" Value="0"/>
+<Element Index="[236]" Value="0"/>
+<Element Index="[237]" Value="0"/>
+<Element Index="[238]" Value="0"/>
+<Element Index="[239]" Value="0"/>
+<Element Index="[240]" Value="0"/>
+<Element Index="[241]" Value="0"/>
+<Element Index="[242]" Value="0"/>
+<Element Index="[243]" Value="0"/>
+<Element Index="[244]" Value="0"/>
+<Element Index="[245]" Value="0"/>
+<Element Index="[246]" Value="0"/>
+<Element Index="[247]" Value="0"/>
+<Element Index="[248]" Value="0"/>
+<Element Index="[249]" Value="0"/>
+<Element Index="[250]" Value="0"/>
+<Element Index="[251]" Value="0"/>
+<Element Index="[252]" Value="0"/>
+<Element Index="[253]" Value="0"/>
+<Element Index="[254]" Value="0"/>
+<Element Index="[255]" Value="0"/>
+<Element Index="[256]" Value="0"/>
+<Element Index="[257]" Value="0"/>
+<Element Index="[258]" Value="0"/>
+<Element Index="[259]" Value="0"/>
+<Element Index="[260]" Value="0"/>
+<Element Index="[261]" Value="0"/>
+<Element Index="[262]" Value="0"/>
+<Element Index="[263]" Value="0"/>
+<Element Index="[264]" Value="0"/>
+<Element Index="[265]" Value="0"/>
+<Element Index="[266]" Value="0"/>
+<Element Index="[267]" Value="0"/>
+<Element Index="[268]" Value="0"/>
+<Element Index="[269]" Value="0"/>
+<Element Index="[270]" Value="0"/>
+<Element Index="[271]" Value="0"/>
+<Element Index="[272]" Value="0"/>
+<Element Index="[273]" Value="0"/>
+<Element Index="[274]" Value="0"/>
+<Element Index="[275]" Value="0"/>
+<Element Index="[276]" Value="0"/>
+<Element Index="[277]" Value="0"/>
+<Element Index="[278]" Value="0"/>
+<Element Index="[279]" Value="0"/>
+<Element Index="[280]" Value="0"/>
+<Element Index="[281]" Value="0"/>
+<Element Index="[282]" Value="0"/>
+<Element Index="[283]" Value="0"/>
+<Element Index="[284]" Value="0"/>
+<Element Index="[285]" Value="0"/>
+<Element Index="[286]" Value="0"/>
+<Element Index="[287]" Value="0"/>
+<Element Index="[288]" Value="0"/>
+<Element Index="[289]" Value="0"/>
+<Element Index="[290]" Value="0"/>
+<Element Index="[291]" Value="0"/>
+<Element Index="[292]" Value="0"/>
+<Element Index="[293]" Value="0"/>
+<Element Index="[294]" Value="0"/>
+<Element Index="[295]" Value="0"/>
+<Element Index="[296]" Value="0"/>
+<Element Index="[297]" Value="0"/>
+<Element Index="[298]" Value="0"/>
+<Element Index="[299]" Value="0"/>
+<Element Index="[300]" Value="0"/>
+<Element Index="[301]" Value="0"/>
+<Element Index="[302]" Value="0"/>
+<Element Index="[303]" Value="0"/>
+<Element Index="[304]" Value="0"/>
+<Element Index="[305]" Value="0"/>
+<Element Index="[306]" Value="0"/>
+<Element Index="[307]" Value="0"/>
+<Element Index="[308]" Value="0"/>
+<Element Index="[309]" Value="0"/>
+<Element Index="[310]" Value="0"/>
+<Element Index="[311]" Value="0"/>
+<Element Index="[312]" Value="0"/>
+<Element Index="[313]" Value="0"/>
+<Element Index="[314]" Value="0"/>
+<Element Index="[315]" Value="0"/>
+<Element Index="[316]" Value="0"/>
+<Element Index="[317]" Value="0"/>
+<Element Index="[318]" Value="0"/>
+<Element Index="[319]" Value="0"/>
+<Element Index="[320]" Value="0"/>
+<Element Index="[321]" Value="0"/>
+<Element Index="[322]" Value="0"/>
+<Element Index="[323]" Value="0"/>
+<Element Index="[324]" Value="0"/>
+<Element Index="[325]" Value="0"/>
+<Element Index="[326]" Value="0"/>
+<Element Index="[327]" Value="0"/>
+<Element Index="[328]" Value="0"/>
+<Element Index="[329]" Value="0"/>
+<Element Index="[330]" Value="0"/>
+<Element Index="[331]" Value="0"/>
+<Element Index="[332]" Value="0"/>
+<Element Index="[333]" Value="0"/>
+<Element Index="[334]" Value="0"/>
+<Element Index="[335]" Value="0"/>
+<Element Index="[336]" Value="0"/>
+<Element Index="[337]" Value="0"/>
+<Element Index="[338]" Value="0"/>
+<Element Index="[339]" Value="0"/>
+<Element Index="[340]" Value="0"/>
+<Element Index="[341]" Value="0"/>
+<Element Index="[342]" Value="0"/>
+<Element Index="[343]" Value="0"/>
+<Element Index="[344]" Value="0"/>
+<Element Index="[345]" Value="0"/>
+<Element Index="[346]" Value="0"/>
+<Element Index="[347]" Value="0"/>
+<Element Index="[348]" Value="0"/>
+<Element Index="[349]" Value="0"/>
+<Element Index="[350]" Value="0"/>
+<Element Index="[351]" Value="0"/>
+<Element Index="[352]" Value="0"/>
+<Element Index="[353]" Value="0"/>
+<Element Index="[354]" Value="0"/>
+<Element Index="[355]" Value="0"/>
+<Element Index="[356]" Value="0"/>
+<Element Index="[357]" Value="0"/>
+<Element Index="[358]" Value="0"/>
+<Element Index="[359]" Value="0"/>
+<Element Index="[360]" Value="0"/>
+<Element Index="[361]" Value="0"/>
+<Element Index="[362]" Value="0"/>
+<Element Index="[363]" Value="0"/>
+<Element Index="[364]" Value="0"/>
+<Element Index="[365]" Value="0"/>
+<Element Index="[366]" Value="0"/>
+<Element Index="[367]" Value="0"/>
+<Element Index="[368]" Value="0"/>
+<Element Index="[369]" Value="0"/>
+<Element Index="[370]" Value="0"/>
+<Element Index="[371]" Value="0"/>
+<Element Index="[372]" Value="0"/>
+<Element Index="[373]" Value="0"/>
+<Element Index="[374]" Value="0"/>
+<Element Index="[375]" Value="0"/>
+<Element Index="[376]" Value="0"/>
+<Element Index="[377]" Value="0"/>
+<Element Index="[378]" Value="0"/>
+<Element Index="[379]" Value="0"/>
+<Element Index="[380]" Value="0"/>
+<Element Index="[381]" Value="0"/>
+<Element Index="[382]" Value="0"/>
+<Element Index="[383]" Value="0"/>
+<Element Index="[384]" Value="0"/>
+<Element Index="[385]" Value="0"/>
+<Element Index="[386]" Value="0"/>
+<Element Index="[387]" Value="0"/>
+<Element Index="[388]" Value="0"/>
+<Element Index="[389]" Value="0"/>
+<Element Index="[390]" Value="0"/>
+<Element Index="[391]" Value="0"/>
+<Element Index="[392]" Value="0"/>
+<Element Index="[393]" Value="0"/>
+<Element Index="[394]" Value="0"/>
+<Element Index="[395]" Value="0"/>
+<Element Index="[396]" Value="0"/>
+<Element Index="[397]" Value="0"/>
+<Element Index="[398]" Value="0"/>
+<Element Index="[399]" Value="0"/>
+<Element Index="[400]" Value="0"/>
+<Element Index="[401]" Value="0"/>
+<Element Index="[402]" Value="0"/>
+<Element Index="[403]" Value="0"/>
+<Element Index="[404]" Value="0"/>
+<Element Index="[405]" Value="0"/>
+<Element Index="[406]" Value="0"/>
+<Element Index="[407]" Value="0"/>
+<Element Index="[408]" Value="0"/>
+<Element Index="[409]" Value="0"/>
+<Element Index="[410]" Value="0"/>
+<Element Index="[411]" Value="0"/>
+<Element Index="[412]" Value="0"/>
+<Element Index="[413]" Value="0"/>
+<Element Index="[414]" Value="0"/>
+<Element Index="[415]" Value="0"/>
+<Element Index="[416]" Value="0"/>
+<Element Index="[417]" Value="0"/>
+<Element Index="[418]" Value="0"/>
+<Element Index="[419]" Value="0"/>
+<Element Index="[420]" Value="0"/>
+<Element Index="[421]" Value="0"/>
+<Element Index="[422]" Value="0"/>
+<Element Index="[423]" Value="0"/>
+<Element Index="[424]" Value="0"/>
+<Element Index="[425]" Value="0"/>
+<Element Index="[426]" Value="0"/>
+<Element Index="[427]" Value="0"/>
+<Element Index="[428]" Value="0"/>
+<Element Index="[429]" Value="0"/>
+<Element Index="[430]" Value="0"/>
+<Element Index="[431]" Value="0"/>
+<Element Index="[432]" Value="0"/>
+<Element Index="[433]" Value="0"/>
+<Element Index="[434]" Value="0"/>
+<Element Index="[435]" Value="0"/>
+<Element Index="[436]" Value="0"/>
+<Element Index="[437]" Value="0"/>
+<Element Index="[438]" Value="0"/>
+<Element Index="[439]" Value="0"/>
+<Element Index="[440]" Value="0"/>
+<Element Index="[441]" Value="0"/>
+<Element Index="[442]" Value="0"/>
+<Element Index="[443]" Value="0"/>
+<Element Index="[444]" Value="0"/>
+<Element Index="[445]" Value="0"/>
+<Element Index="[446]" Value="0"/>
+<Element Index="[447]" Value="0"/>
+<Element Index="[448]" Value="0"/>
+<Element Index="[449]" Value="0"/>
+<Element Index="[450]" Value="0"/>
+<Element Index="[451]" Value="0"/>
+<Element Index="[452]" Value="0"/>
+<Element Index="[453]" Value="0"/>
+<Element Index="[454]" Value="0"/>
+<Element Index="[455]" Value="0"/>
+<Element Index="[456]" Value="0"/>
+<Element Index="[457]" Value="0"/>
+<Element Index="[458]" Value="0"/>
+<Element Index="[459]" Value="0"/>
+<Element Index="[460]" Value="0"/>
+<Element Index="[461]" Value="0"/>
+</ArrayMember>
+<DataValueMember Name="PacketSize" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="ValidFunction" DataType="BOOL" Value="0"/>
+</StructureMember>
+<DataValueMember Name="DataReceived" DataType="BOOL" Value="0"/>
+<StructureMember Name="ONS_Read" DataType="EFX_ONS">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="InputBit" DataType="BOOL" Value="0"/>
+<DataValueMember Name="OutputBit" DataType="BOOL" Value="0"/>
+<DataValueMember Name="ResetTotal" DataType="BOOL" Value="0"/>
+</StructureMember>
+<StructureMember Name="ONS_ReadError" DataType="EFX_ONS">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="InputBit" DataType="BOOL" Value="0"/>
+<DataValueMember Name="OutputBit" DataType="BOOL" Value="0"/>
+<DataValueMember Name="ResetTotal" DataType="BOOL" Value="0"/>
+</StructureMember>
+<DataValueMember Name="WriteRequired" DataType="BOOL" Value="0"/>
+<StructureMember Name="WriteData" DataType="TCP_WRITE_PARAM">
+<DataValueMember Name="Timeout" DataType="DINT" Radix="Decimal" Value="0"/>
+<StructureMember Name="ToAddr" DataType="TCP_SOCKET_ADDRESS">
+<DataValueMember Name="Family" DataType="INT" Radix="Decimal" Value="2"/>
+<DataValueMember Name="Port" DataType="INT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="Addr" DataType="DINT" Radix="Decimal" Value="0"/>
+</StructureMember>
+<StructureMember Name="Buffer" DataType="STRING480">
+<DataValueMember Name="LEN" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="DATA" DataType="STRING480" Radix="ASCII">
+<![CDATA[]]>
+</DataValueMember>
+</StructureMember>
+</StructureMember>
+<DataValueMember Name="WriteDataSent" DataType="DINT" Radix="Decimal" Value="0"/>
+<StructureMember Name="ONS_WriteError" DataType="EFX_ONS">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="InputBit" DataType="BOOL" Value="0"/>
+<DataValueMember Name="OutputBit" DataType="BOOL" Value="0"/>
+<DataValueMember Name="ResetTotal" DataType="BOOL" Value="0"/>
+</StructureMember>
+</Structure>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="SocketParameters" DataType="TCP_SOCKET_PARAM" ExternalAccess="None">
+<DefaultData>01 00 00 00 02 00 F6 01 00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<Structure DataType="TCP_SOCKET_PARAM">
+<DataValueMember Name="Type" DataType="DINT" Radix="Decimal" Value="1"/>
+<StructureMember Name="Addr" DataType="TCP_SOCKET_ADDRESS">
+<DataValueMember Name="Family" DataType="INT" Radix="Decimal" Value="2"/>
+<DataValueMember Name="Port" DataType="INT" Radix="Decimal" Value="502"/>
+<DataValueMember Name="Addr" DataType="DINT" Radix="Decimal" Value="0"/>
+</StructureMember>
+</Structure>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="InactivityTimeout" DataType="DINT" Radix="Decimal" ExternalAccess="None">
+<DefaultData>60 EA 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="60000"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="Tmr_ListenRetry" DataType="FBD_TIMER" ExternalAccess="None">
+<DefaultData>01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 04 00 00 00 00 00 00 00 00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<Structure DataType="FBD_TIMER">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="TimerEnable" DataType="BOOL" Value="0"/>
+<DataValueMember Name="PRE" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="Reset" DataType="BOOL" Value="0"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="ACC" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="EN" DataType="BOOL" Value="0"/>
+<DataValueMember Name="TT" DataType="BOOL" Value="0"/>
+<DataValueMember Name="DN" DataType="BOOL" Value="0"/>
+<DataValueMember Name="Status" DataType="DINT" Radix="Hex" Value="16#0000_0000"/>
+<DataValueMember Name="InstructFault" DataType="BOOL" Value="0"/>
+<DataValueMember Name="PresetInv" DataType="BOOL" Value="0"/>
+</Structure>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="ReadWriteMessages" DataType="EFX_MBS_RWMSG" ExternalAccess="None">
+<DefaultData>01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<Structure DataType="EFX_MBS_RWMSG">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="NumRequests" DataType="DINT" Radix="Decimal" Value="0"/>
+</Structure>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="SocketAcceptTimeout" DataType="DINT" Radix="Decimal" ExternalAccess="None">
+<DefaultData>10 27 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="10000"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="ReadWriteInactivity" DataType="DINT" Radix="Decimal" ExternalAccess="None">
+<DefaultData>B8 0B 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="3000"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="ReadStatus" DataType="EFX_MBS_READ_STATUS" ExternalAccess="None">
+<DefaultData>01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<Structure DataType="EFX_MBS_READ_STATUS">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="MaxRegisterLength" DataType="DINT" Radix="Decimal" Value="0"/>
+</Structure>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="ReadMessageTimeout" DataType="REAL" Radix="Float" ExternalAccess="None">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="0.0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="WriteMessageTimeout" DataType="REAL" Radix="Float" ExternalAccess="None">
+<DefaultData>00 00 00 40</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="REAL" Radix="Float" Value="2.0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="testCMD" DataType="EFX_MBS_REQ_PKT_INFO" ExternalAccess="None">
+<DefaultData>00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<Structure DataType="EFX_MBS_REQ_PKT_INFO">
+<DataValueMember Name="Transaction" DataType="INT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="Protocol" DataType="INT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="Length" DataType="INT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="Unit" DataType="SINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="Function" DataType="SINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="StartAddress" DataType="INT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="RegisterCount" DataType="INT" Radix="Decimal" Value="0"/>
+<ArrayMember Name="Data" DataType="SINT" Dimensions="462" Radix="Decimal">
+<Element Index="[0]" Value="0"/>
+<Element Index="[1]" Value="0"/>
+<Element Index="[2]" Value="0"/>
+<Element Index="[3]" Value="0"/>
+<Element Index="[4]" Value="0"/>
+<Element Index="[5]" Value="0"/>
+<Element Index="[6]" Value="0"/>
+<Element Index="[7]" Value="0"/>
+<Element Index="[8]" Value="0"/>
+<Element Index="[9]" Value="0"/>
+<Element Index="[10]" Value="0"/>
+<Element Index="[11]" Value="0"/>
+<Element Index="[12]" Value="0"/>
+<Element Index="[13]" Value="0"/>
+<Element Index="[14]" Value="0"/>
+<Element Index="[15]" Value="0"/>
+<Element Index="[16]" Value="0"/>
+<Element Index="[17]" Value="0"/>
+<Element Index="[18]" Value="0"/>
+<Element Index="[19]" Value="0"/>
+<Element Index="[20]" Value="0"/>
+<Element Index="[21]" Value="0"/>
+<Element Index="[22]" Value="0"/>
+<Element Index="[23]" Value="0"/>
+<Element Index="[24]" Value="0"/>
+<Element Index="[25]" Value="0"/>
+<Element Index="[26]" Value="0"/>
+<Element Index="[27]" Value="0"/>
+<Element Index="[28]" Value="0"/>
+<Element Index="[29]" Value="0"/>
+<Element Index="[30]" Value="0"/>
+<Element Index="[31]" Value="0"/>
+<Element Index="[32]" Value="0"/>
+<Element Index="[33]" Value="0"/>
+<Element Index="[34]" Value="0"/>
+<Element Index="[35]" Value="0"/>
+<Element Index="[36]" Value="0"/>
+<Element Index="[37]" Value="0"/>
+<Element Index="[38]" Value="0"/>
+<Element Index="[39]" Value="0"/>
+<Element Index="[40]" Value="0"/>
+<Element Index="[41]" Value="0"/>
+<Element Index="[42]" Value="0"/>
+<Element Index="[43]" Value="0"/>
+<Element Index="[44]" Value="0"/>
+<Element Index="[45]" Value="0"/>
+<Element Index="[46]" Value="0"/>
+<Element Index="[47]" Value="0"/>
+<Element Index="[48]" Value="0"/>
+<Element Index="[49]" Value="0"/>
+<Element Index="[50]" Value="0"/>
+<Element Index="[51]" Value="0"/>
+<Element Index="[52]" Value="0"/>
+<Element Index="[53]" Value="0"/>
+<Element Index="[54]" Value="0"/>
+<Element Index="[55]" Value="0"/>
+<Element Index="[56]" Value="0"/>
+<Element Index="[57]" Value="0"/>
+<Element Index="[58]" Value="0"/>
+<Element Index="[59]" Value="0"/>
+<Element Index="[60]" Value="0"/>
+<Element Index="[61]" Value="0"/>
+<Element Index="[62]" Value="0"/>
+<Element Index="[63]" Value="0"/>
+<Element Index="[64]" Value="0"/>
+<Element Index="[65]" Value="0"/>
+<Element Index="[66]" Value="0"/>
+<Element Index="[67]" Value="0"/>
+<Element Index="[68]" Value="0"/>
+<Element Index="[69]" Value="0"/>
+<Element Index="[70]" Value="0"/>
+<Element Index="[71]" Value="0"/>
+<Element Index="[72]" Value="0"/>
+<Element Index="[73]" Value="0"/>
+<Element Index="[74]" Value="0"/>
+<Element Index="[75]" Value="0"/>
+<Element Index="[76]" Value="0"/>
+<Element Index="[77]" Value="0"/>
+<Element Index="[78]" Value="0"/>
+<Element Index="[79]" Value="0"/>
+<Element Index="[80]" Value="0"/>
+<Element Index="[81]" Value="0"/>
+<Element Index="[82]" Value="0"/>
+<Element Index="[83]" Value="0"/>
+<Element Index="[84]" Value="0"/>
+<Element Index="[85]" Value="0"/>
+<Element Index="[86]" Value="0"/>
+<Element Index="[87]" Value="0"/>
+<Element Index="[88]" Value="0"/>
+<Element Index="[89]" Value="0"/>
+<Element Index="[90]" Value="0"/>
+<Element Index="[91]" Value="0"/>
+<Element Index="[92]" Value="0"/>
+<Element Index="[93]" Value="0"/>
+<Element Index="[94]" Value="0"/>
+<Element Index="[95]" Value="0"/>
+<Element Index="[96]" Value="0"/>
+<Element Index="[97]" Value="0"/>
+<Element Index="[98]" Value="0"/>
+<Element Index="[99]" Value="0"/>
+<Element Index="[100]" Value="0"/>
+<Element Index="[101]" Value="0"/>
+<Element Index="[102]" Value="0"/>
+<Element Index="[103]" Value="0"/>
+<Element Index="[104]" Value="0"/>
+<Element Index="[105]" Value="0"/>
+<Element Index="[106]" Value="0"/>
+<Element Index="[107]" Value="0"/>
+<Element Index="[108]" Value="0"/>
+<Element Index="[109]" Value="0"/>
+<Element Index="[110]" Value="0"/>
+<Element Index="[111]" Value="0"/>
+<Element Index="[112]" Value="0"/>
+<Element Index="[113]" Value="0"/>
+<Element Index="[114]" Value="0"/>
+<Element Index="[115]" Value="0"/>
+<Element Index="[116]" Value="0"/>
+<Element Index="[117]" Value="0"/>
+<Element Index="[118]" Value="0"/>
+<Element Index="[119]" Value="0"/>
+<Element Index="[120]" Value="0"/>
+<Element Index="[121]" Value="0"/>
+<Element Index="[122]" Value="0"/>
+<Element Index="[123]" Value="0"/>
+<Element Index="[124]" Value="0"/>
+<Element Index="[125]" Value="0"/>
+<Element Index="[126]" Value="0"/>
+<Element Index="[127]" Value="0"/>
+<Element Index="[128]" Value="0"/>
+<Element Index="[129]" Value="0"/>
+<Element Index="[130]" Value="0"/>
+<Element Index="[131]" Value="0"/>
+<Element Index="[132]" Value="0"/>
+<Element Index="[133]" Value="0"/>
+<Element Index="[134]" Value="0"/>
+<Element Index="[135]" Value="0"/>
+<Element Index="[136]" Value="0"/>
+<Element Index="[137]" Value="0"/>
+<Element Index="[138]" Value="0"/>
+<Element Index="[139]" Value="0"/>
+<Element Index="[140]" Value="0"/>
+<Element Index="[141]" Value="0"/>
+<Element Index="[142]" Value="0"/>
+<Element Index="[143]" Value="0"/>
+<Element Index="[144]" Value="0"/>
+<Element Index="[145]" Value="0"/>
+<Element Index="[146]" Value="0"/>
+<Element Index="[147]" Value="0"/>
+<Element Index="[148]" Value="0"/>
+<Element Index="[149]" Value="0"/>
+<Element Index="[150]" Value="0"/>
+<Element Index="[151]" Value="0"/>
+<Element Index="[152]" Value="0"/>
+<Element Index="[153]" Value="0"/>
+<Element Index="[154]" Value="0"/>
+<Element Index="[155]" Value="0"/>
+<Element Index="[156]" Value="0"/>
+<Element Index="[157]" Value="0"/>
+<Element Index="[158]" Value="0"/>
+<Element Index="[159]" Value="0"/>
+<Element Index="[160]" Value="0"/>
+<Element Index="[161]" Value="0"/>
+<Element Index="[162]" Value="0"/>
+<Element Index="[163]" Value="0"/>
+<Element Index="[164]" Value="0"/>
+<Element Index="[165]" Value="0"/>
+<Element Index="[166]" Value="0"/>
+<Element Index="[167]" Value="0"/>
+<Element Index="[168]" Value="0"/>
+<Element Index="[169]" Value="0"/>
+<Element Index="[170]" Value="0"/>
+<Element Index="[171]" Value="0"/>
+<Element Index="[172]" Value="0"/>
+<Element Index="[173]" Value="0"/>
+<Element Index="[174]" Value="0"/>
+<Element Index="[175]" Value="0"/>
+<Element Index="[176]" Value="0"/>
+<Element Index="[177]" Value="0"/>
+<Element Index="[178]" Value="0"/>
+<Element Index="[179]" Value="0"/>
+<Element Index="[180]" Value="0"/>
+<Element Index="[181]" Value="0"/>
+<Element Index="[182]" Value="0"/>
+<Element Index="[183]" Value="0"/>
+<Element Index="[184]" Value="0"/>
+<Element Index="[185]" Value="0"/>
+<Element Index="[186]" Value="0"/>
+<Element Index="[187]" Value="0"/>
+<Element Index="[188]" Value="0"/>
+<Element Index="[189]" Value="0"/>
+<Element Index="[190]" Value="0"/>
+<Element Index="[191]" Value="0"/>
+<Element Index="[192]" Value="0"/>
+<Element Index="[193]" Value="0"/>
+<Element Index="[194]" Value="0"/>
+<Element Index="[195]" Value="0"/>
+<Element Index="[196]" Value="0"/>
+<Element Index="[197]" Value="0"/>
+<Element Index="[198]" Value="0"/>
+<Element Index="[199]" Value="0"/>
+<Element Index="[200]" Value="0"/>
+<Element Index="[201]" Value="0"/>
+<Element Index="[202]" Value="0"/>
+<Element Index="[203]" Value="0"/>
+<Element Index="[204]" Value="0"/>
+<Element Index="[205]" Value="0"/>
+<Element Index="[206]" Value="0"/>
+<Element Index="[207]" Value="0"/>
+<Element Index="[208]" Value="0"/>
+<Element Index="[209]" Value="0"/>
+<Element Index="[210]" Value="0"/>
+<Element Index="[211]" Value="0"/>
+<Element Index="[212]" Value="0"/>
+<Element Index="[213]" Value="0"/>
+<Element Index="[214]" Value="0"/>
+<Element Index="[215]" Value="0"/>
+<Element Index="[216]" Value="0"/>
+<Element Index="[217]" Value="0"/>
+<Element Index="[218]" Value="0"/>
+<Element Index="[219]" Value="0"/>
+<Element Index="[220]" Value="0"/>
+<Element Index="[221]" Value="0"/>
+<Element Index="[222]" Value="0"/>
+<Element Index="[223]" Value="0"/>
+<Element Index="[224]" Value="0"/>
+<Element Index="[225]" Value="0"/>
+<Element Index="[226]" Value="0"/>
+<Element Index="[227]" Value="0"/>
+<Element Index="[228]" Value="0"/>
+<Element Index="[229]" Value="0"/>
+<Element Index="[230]" Value="0"/>
+<Element Index="[231]" Value="0"/>
+<Element Index="[232]" Value="0"/>
+<Element Index="[233]" Value="0"/>
+<Element Index="[234]" Value="0"/>
+<Element Index="[235]" Value="0"/>
+<Element Index="[236]" Value="0"/>
+<Element Index="[237]" Value="0"/>
+<Element Index="[238]" Value="0"/>
+<Element Index="[239]" Value="0"/>
+<Element Index="[240]" Value="0"/>
+<Element Index="[241]" Value="0"/>
+<Element Index="[242]" Value="0"/>
+<Element Index="[243]" Value="0"/>
+<Element Index="[244]" Value="0"/>
+<Element Index="[245]" Value="0"/>
+<Element Index="[246]" Value="0"/>
+<Element Index="[247]" Value="0"/>
+<Element Index="[248]" Value="0"/>
+<Element Index="[249]" Value="0"/>
+<Element Index="[250]" Value="0"/>
+<Element Index="[251]" Value="0"/>
+<Element Index="[252]" Value="0"/>
+<Element Index="[253]" Value="0"/>
+<Element Index="[254]" Value="0"/>
+<Element Index="[255]" Value="0"/>
+<Element Index="[256]" Value="0"/>
+<Element Index="[257]" Value="0"/>
+<Element Index="[258]" Value="0"/>
+<Element Index="[259]" Value="0"/>
+<Element Index="[260]" Value="0"/>
+<Element Index="[261]" Value="0"/>
+<Element Index="[262]" Value="0"/>
+<Element Index="[263]" Value="0"/>
+<Element Index="[264]" Value="0"/>
+<Element Index="[265]" Value="0"/>
+<Element Index="[266]" Value="0"/>
+<Element Index="[267]" Value="0"/>
+<Element Index="[268]" Value="0"/>
+<Element Index="[269]" Value="0"/>
+<Element Index="[270]" Value="0"/>
+<Element Index="[271]" Value="0"/>
+<Element Index="[272]" Value="0"/>
+<Element Index="[273]" Value="0"/>
+<Element Index="[274]" Value="0"/>
+<Element Index="[275]" Value="0"/>
+<Element Index="[276]" Value="0"/>
+<Element Index="[277]" Value="0"/>
+<Element Index="[278]" Value="0"/>
+<Element Index="[279]" Value="0"/>
+<Element Index="[280]" Value="0"/>
+<Element Index="[281]" Value="0"/>
+<Element Index="[282]" Value="0"/>
+<Element Index="[283]" Value="0"/>
+<Element Index="[284]" Value="0"/>
+<Element Index="[285]" Value="0"/>
+<Element Index="[286]" Value="0"/>
+<Element Index="[287]" Value="0"/>
+<Element Index="[288]" Value="0"/>
+<Element Index="[289]" Value="0"/>
+<Element Index="[290]" Value="0"/>
+<Element Index="[291]" Value="0"/>
+<Element Index="[292]" Value="0"/>
+<Element Index="[293]" Value="0"/>
+<Element Index="[294]" Value="0"/>
+<Element Index="[295]" Value="0"/>
+<Element Index="[296]" Value="0"/>
+<Element Index="[297]" Value="0"/>
+<Element Index="[298]" Value="0"/>
+<Element Index="[299]" Value="0"/>
+<Element Index="[300]" Value="0"/>
+<Element Index="[301]" Value="0"/>
+<Element Index="[302]" Value="0"/>
+<Element Index="[303]" Value="0"/>
+<Element Index="[304]" Value="0"/>
+<Element Index="[305]" Value="0"/>
+<Element Index="[306]" Value="0"/>
+<Element Index="[307]" Value="0"/>
+<Element Index="[308]" Value="0"/>
+<Element Index="[309]" Value="0"/>
+<Element Index="[310]" Value="0"/>
+<Element Index="[311]" Value="0"/>
+<Element Index="[312]" Value="0"/>
+<Element Index="[313]" Value="0"/>
+<Element Index="[314]" Value="0"/>
+<Element Index="[315]" Value="0"/>
+<Element Index="[316]" Value="0"/>
+<Element Index="[317]" Value="0"/>
+<Element Index="[318]" Value="0"/>
+<Element Index="[319]" Value="0"/>
+<Element Index="[320]" Value="0"/>
+<Element Index="[321]" Value="0"/>
+<Element Index="[322]" Value="0"/>
+<Element Index="[323]" Value="0"/>
+<Element Index="[324]" Value="0"/>
+<Element Index="[325]" Value="0"/>
+<Element Index="[326]" Value="0"/>
+<Element Index="[327]" Value="0"/>
+<Element Index="[328]" Value="0"/>
+<Element Index="[329]" Value="0"/>
+<Element Index="[330]" Value="0"/>
+<Element Index="[331]" Value="0"/>
+<Element Index="[332]" Value="0"/>
+<Element Index="[333]" Value="0"/>
+<Element Index="[334]" Value="0"/>
+<Element Index="[335]" Value="0"/>
+<Element Index="[336]" Value="0"/>
+<Element Index="[337]" Value="0"/>
+<Element Index="[338]" Value="0"/>
+<Element Index="[339]" Value="0"/>
+<Element Index="[340]" Value="0"/>
+<Element Index="[341]" Value="0"/>
+<Element Index="[342]" Value="0"/>
+<Element Index="[343]" Value="0"/>
+<Element Index="[344]" Value="0"/>
+<Element Index="[345]" Value="0"/>
+<Element Index="[346]" Value="0"/>
+<Element Index="[347]" Value="0"/>
+<Element Index="[348]" Value="0"/>
+<Element Index="[349]" Value="0"/>
+<Element Index="[350]" Value="0"/>
+<Element Index="[351]" Value="0"/>
+<Element Index="[352]" Value="0"/>
+<Element Index="[353]" Value="0"/>
+<Element Index="[354]" Value="0"/>
+<Element Index="[355]" Value="0"/>
+<Element Index="[356]" Value="0"/>
+<Element Index="[357]" Value="0"/>
+<Element Index="[358]" Value="0"/>
+<Element Index="[359]" Value="0"/>
+<Element Index="[360]" Value="0"/>
+<Element Index="[361]" Value="0"/>
+<Element Index="[362]" Value="0"/>
+<Element Index="[363]" Value="0"/>
+<Element Index="[364]" Value="0"/>
+<Element Index="[365]" Value="0"/>
+<Element Index="[366]" Value="0"/>
+<Element Index="[367]" Value="0"/>
+<Element Index="[368]" Value="0"/>
+<Element Index="[369]" Value="0"/>
+<Element Index="[370]" Value="0"/>
+<Element Index="[371]" Value="0"/>
+<Element Index="[372]" Value="0"/>
+<Element Index="[373]" Value="0"/>
+<Element Index="[374]" Value="0"/>
+<Element Index="[375]" Value="0"/>
+<Element Index="[376]" Value="0"/>
+<Element Index="[377]" Value="0"/>
+<Element Index="[378]" Value="0"/>
+<Element Index="[379]" Value="0"/>
+<Element Index="[380]" Value="0"/>
+<Element Index="[381]" Value="0"/>
+<Element Index="[382]" Value="0"/>
+<Element Index="[383]" Value="0"/>
+<Element Index="[384]" Value="0"/>
+<Element Index="[385]" Value="0"/>
+<Element Index="[386]" Value="0"/>
+<Element Index="[387]" Value="0"/>
+<Element Index="[388]" Value="0"/>
+<Element Index="[389]" Value="0"/>
+<Element Index="[390]" Value="0"/>
+<Element Index="[391]" Value="0"/>
+<Element Index="[392]" Value="0"/>
+<Element Index="[393]" Value="0"/>
+<Element Index="[394]" Value="0"/>
+<Element Index="[395]" Value="0"/>
+<Element Index="[396]" Value="0"/>
+<Element Index="[397]" Value="0"/>
+<Element Index="[398]" Value="0"/>
+<Element Index="[399]" Value="0"/>
+<Element Index="[400]" Value="0"/>
+<Element Index="[401]" Value="0"/>
+<Element Index="[402]" Value="0"/>
+<Element Index="[403]" Value="0"/>
+<Element Index="[404]" Value="0"/>
+<Element Index="[405]" Value="0"/>
+<Element Index="[406]" Value="0"/>
+<Element Index="[407]" Value="0"/>
+<Element Index="[408]" Value="0"/>
+<Element Index="[409]" Value="0"/>
+<Element Index="[410]" Value="0"/>
+<Element Index="[411]" Value="0"/>
+<Element Index="[412]" Value="0"/>
+<Element Index="[413]" Value="0"/>
+<Element Index="[414]" Value="0"/>
+<Element Index="[415]" Value="0"/>
+<Element Index="[416]" Value="0"/>
+<Element Index="[417]" Value="0"/>
+<Element Index="[418]" Value="0"/>
+<Element Index="[419]" Value="0"/>
+<Element Index="[420]" Value="0"/>
+<Element Index="[421]" Value="0"/>
+<Element Index="[422]" Value="0"/>
+<Element Index="[423]" Value="0"/>
+<Element Index="[424]" Value="0"/>
+<Element Index="[425]" Value="0"/>
+<Element Index="[426]" Value="0"/>
+<Element Index="[427]" Value="0"/>
+<Element Index="[428]" Value="0"/>
+<Element Index="[429]" Value="0"/>
+<Element Index="[430]" Value="0"/>
+<Element Index="[431]" Value="0"/>
+<Element Index="[432]" Value="0"/>
+<Element Index="[433]" Value="0"/>
+<Element Index="[434]" Value="0"/>
+<Element Index="[435]" Value="0"/>
+<Element Index="[436]" Value="0"/>
+<Element Index="[437]" Value="0"/>
+<Element Index="[438]" Value="0"/>
+<Element Index="[439]" Value="0"/>
+<Element Index="[440]" Value="0"/>
+<Element Index="[441]" Value="0"/>
+<Element Index="[442]" Value="0"/>
+<Element Index="[443]" Value="0"/>
+<Element Index="[444]" Value="0"/>
+<Element Index="[445]" Value="0"/>
+<Element Index="[446]" Value="0"/>
+<Element Index="[447]" Value="0"/>
+<Element Index="[448]" Value="0"/>
+<Element Index="[449]" Value="0"/>
+<Element Index="[450]" Value="0"/>
+<Element Index="[451]" Value="0"/>
+<Element Index="[452]" Value="0"/>
+<Element Index="[453]" Value="0"/>
+<Element Index="[454]" Value="0"/>
+<Element Index="[455]" Value="0"/>
+<Element Index="[456]" Value="0"/>
+<Element Index="[457]" Value="0"/>
+<Element Index="[458]" Value="0"/>
+<Element Index="[459]" Value="0"/>
+<Element Index="[460]" Value="0"/>
+<Element Index="[461]" Value="0"/>
+</ArrayMember>
+<DataValueMember Name="PacketSize" DataType="DINT" Radix="Decimal" Value="0"/>
+<DataValueMember Name="ValidFunction" DataType="BOOL" Value="0"/>
+</Structure>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="WriteStatus" DataType="EFX_MBS_WRITE_STATUS" ExternalAccess="None">
+<DefaultData>01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<Structure DataType="EFX_MBS_WRITE_STATUS">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+</Structure>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="ReadRegister" DataType="EFX_MBS_READ_REGISTER" ExternalAccess="None">
+<DefaultData>01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<Structure DataType="EFX_MBS_READ_REGISTER">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="MaxRegisterLength" DataType="DINT" Radix="Decimal" Value="0"/>
+</Structure>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="WriteRegister" DataType="EFX_MBS_WRITE_REGISTER" ExternalAccess="None">
+<DefaultData>01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<Structure DataType="EFX_MBS_WRITE_REGISTER">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+</Structure>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="ONS_CreateSocketSuccess" DataType="FBD_ONESHOT" ExternalAccess="None">
+<DefaultData>01 00 00 00 00 00 00 00 04 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<Structure DataType="FBD_ONESHOT">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="InputBit" DataType="BOOL" Value="0"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="OutputBit" DataType="BOOL" Value="0"/>
+</Structure>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="ONS_SetInactivityTimeoutSuccess" DataType="FBD_ONESHOT" ExternalAccess="None">
+<DefaultData>01 00 00 00 00 00 00 00 04 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<Structure DataType="FBD_ONESHOT">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="InputBit" DataType="BOOL" Value="0"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="OutputBit" DataType="BOOL" Value="0"/>
+</Structure>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="ONS_SetInactivityTimeoutFail" DataType="FBD_ONESHOT" ExternalAccess="None">
+<DefaultData>01 00 00 00 00 00 00 00 04 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<Structure DataType="FBD_ONESHOT">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="InputBit" DataType="BOOL" Value="0"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="OutputBit" DataType="BOOL" Value="0"/>
+</Structure>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="ONS_ConnAcceptTimeoutFail" DataType="FBD_ONESHOT" ExternalAccess="None">
+<DefaultData>01 00 00 00 00 00 00 00 04 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<Structure DataType="FBD_ONESHOT">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="InputBit" DataType="BOOL" Value="0"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="OutputBit" DataType="BOOL" Value="0"/>
+</Structure>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="ONS_ConnAcceptSuccess" DataType="FBD_ONESHOT" ExternalAccess="None">
+<DefaultData>01 00 00 00 00 00 00 00 04 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<Structure DataType="FBD_ONESHOT">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="InputBit" DataType="BOOL" Value="0"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="OutputBit" DataType="BOOL" Value="0"/>
+</Structure>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="ONS_ConnAcceptFail" DataType="FBD_ONESHOT" ExternalAccess="None">
+<DefaultData>01 00 00 00 00 00 00 00 04 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<Structure DataType="FBD_ONESHOT">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="InputBit" DataType="BOOL" Value="0"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="OutputBit" DataType="BOOL" Value="0"/>
+</Structure>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="ONS_ConnAcceptTimeoutSuccess" DataType="FBD_ONESHOT" ExternalAccess="None">
+<DefaultData>01 00 00 00 00 00 00 00 04 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<Structure DataType="FBD_ONESHOT">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="InputBit" DataType="BOOL" Value="0"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="OutputBit" DataType="BOOL" Value="0"/>
+</Structure>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="ONS_CreateSocketFail" DataType="FBD_ONESHOT" ExternalAccess="None">
+<DefaultData>01 00 00 00 00 00 00 00 04 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<Structure DataType="FBD_ONESHOT">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="InputBit" DataType="BOOL" Value="0"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="OutputBit" DataType="BOOL" Value="0"/>
+</Structure>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="ONS_DeleteAllSocketSuccess" DataType="FBD_ONESHOT" ExternalAccess="None">
+<DefaultData>01 00 00 00 00 00 00 00 04 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<Structure DataType="FBD_ONESHOT">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="InputBit" DataType="BOOL" Value="0"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="OutputBit" DataType="BOOL" Value="0"/>
+</Structure>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="ONS_DeleteAllSocketFail" DataType="FBD_ONESHOT" ExternalAccess="None">
+<DefaultData>01 00 00 00 00 00 00 00 04 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<Structure DataType="FBD_ONESHOT">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="InputBit" DataType="BOOL" Value="0"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="OutputBit" DataType="BOOL" Value="0"/>
+</Structure>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="ONS_Initialization" DataType="FBD_ONESHOT" ExternalAccess="None">
+<DefaultData>01 00 00 00 00 00 00 00 04 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<Structure DataType="FBD_ONESHOT">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="InputBit" DataType="BOOL" Value="0"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="OutputBit" DataType="BOOL" Value="0"/>
+</Structure>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="ONS_SocketReadyForListen" DataType="FBD_ONESHOT" ExternalAccess="None">
+<DefaultData>01 00 00 00 00 00 00 00 04 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<Structure DataType="FBD_ONESHOT">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="InputBit" DataType="BOOL" Value="0"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="OutputBit" DataType="BOOL" Value="0"/>
+</Structure>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="testCount" DataType="DINT" Radix="Decimal" ExternalAccess="None">
+<DefaultData>00 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<DataValue DataType="DINT" Radix="Decimal" Value="0"/>
+</DefaultData>
+</LocalTag>
+<LocalTag Name="ONS_SocketRefresh" DataType="FBD_ONESHOT" ExternalAccess="None">
+<DefaultData>01 00 00 00 00 00 00 00 04 00 00 00</DefaultData>
+<DefaultData Format="Decorated">
+<Structure DataType="FBD_ONESHOT">
+<DataValueMember Name="EnableIn" DataType="BOOL" Value="1"/>
+<DataValueMember Name="InputBit" DataType="BOOL" Value="0"/>
+<DataValueMember Name="EnableOut" DataType="BOOL" Value="0"/>
+<DataValueMember Name="OutputBit" DataType="BOOL" Value="0"/>
+</Structure>
+</DefaultData>
+</LocalTag>
+</LocalTags>
+<Routines>
+<Routine Name="Logic" Type="ST">
+<STContent>
+<Line Number="0">
+<![CDATA[/*********************************************************************************************************************************]]>
+</Line>
+<Line Number="1">
+<![CDATA[]]>
+</Line>
+<Line Number="2">
+<![CDATA[This sample Modbus TCP server (slave) provides basic Modbus TCP functionality ]]>
+</Line>
+<Line Number="3">
+<![CDATA[for ControlLogix PLC using Logix Open Socket interface.]]>
+</Line>
+<Line Number="4">
+<![CDATA[]]>
+</Line>
+<Line Number="5">
+<![CDATA[This application works as a server (slave) only and can't be used as a client (master).]]>
+</Line>
+<Line Number="6">
+<![CDATA[]]>
+</Line>
+<Line Number="7">
+<![CDATA[Server supports only following Modbus commands:]]>
+</Line>
+<Line Number="8">
+<![CDATA[01 - read coils 0xxxx, ]]>
+</Line>
+<Line Number="9">
+<![CDATA[02 - read inputs 1xxxx, ]]>
+</Line>
+<Line Number="10">
+<![CDATA[03 - read holding registers 4xxxx, ]]>
+</Line>
+<Line Number="11">
+<![CDATA[04 - read input registers 3xxxx, ]]>
+</Line>
+<Line Number="12">
+<![CDATA[05 - write single coil 0xxxx, ]]>
+</Line>
+<Line Number="13">
+<![CDATA[06 - write single register 4xxxx, ]]>
+</Line>
+<Line Number="14">
+<![CDATA[15 - write coil range, ]]>
+</Line>
+<Line Number="15">
+<![CDATA[16 - write register range]]>
+</Line>
+<Line Number="16">
+<![CDATA[]]>
+</Line>
+<Line Number="17">
+<![CDATA[Application supports 1000 elements in each range. Currently it support a single connection only.]]>
+</Line>
+<Line Number="18">
+<![CDATA[]]>
+</Line>
+<Line Number="19">
+<![CDATA[Set path to Ether port/module in MBTU_ENETModulePort tag]]>
+</Line>
+<Line Number="20">
+<![CDATA[]]>
+</Line>
+<Line Number="21">
+<![CDATA[!!!!!!!!!!!! Revision History !!!!!!!!!!!!]]>
+</Line>
+<Line Number="22">
+<![CDATA[ModbusTCP_Slave_R100 initial release August 31, 2012]]>
+</Line>
+<Line Number="23">
+<![CDATA[ModbusTCP_Slave_R101 release resolves import issue due to invalid character in comment for tag RG_STR_TMP September 7, 2012]]>
+</Line>
+<Line Number="24">
+<![CDATA[]]>
+</Line>
+<Line Number="25">
+<![CDATA[*********************************************************************************************************************************/]]>
+</Line>
+<Line Number="26">
+<![CDATA[]]>
+</Line>
+<Line Number="27">
+<![CDATA[/********************************************************************************]]>
+</Line>
+<Line Number="28">
+<![CDATA[BUG LIST]]>
+</Line>
+<Line Number="29">
+<![CDATA[+ ONE CONNECTION]]>
+</Line>
+<Line Number="30">
+<![CDATA[X CONNECTED STATUS]]>
+</Line>
+<Line Number="31">
+<![CDATA[X CONVERT EFX_ONS TO OSRI(FBD_ONSHOT)]]>
+</Line>
+<Line Number="32">
+<![CDATA[X OPTIONAL INTERNAL CLOCK]]>
+</Line>
+<Line Number="33">
+<![CDATA[X OPTIONAL SLAVE ID]]>
+</Line>
+<Line Number="34">
+<![CDATA[X BLOCK OUT DATA (EXCEPTION)]]>
+</Line>
+<Line Number="35">
+<![CDATA[X REMOTE ENET MODULES]]>
+</Line>
+<Line Number="36">
+<![CDATA[X DELETE ONLY SOCKETS USED BY APPLICATION ON DISABLE]]>
+</Line>
+<Line Number="37">
+<![CDATA[+ ITERATIVE BIT NOTATION ( ARRAY[X].[Y] )]]>
+</Line>
+<Line Number="38">
+<![CDATA[+ COMPLETE BITS]]>
+</Line>
+<Line Number="39">
+<![CDATA[+ COMPLETE WORDS]]>
+</Line>
+<Line Number="40">
+<![CDATA[X ERROR MESSAGE STRING]]>
+</Line>
+<Line Number="41">
+<![CDATA[X IMPLEMENT EXCEPTIONS]]>
+</Line>
+<Line Number="42">
+<![CDATA[*********************************************************************************/]]>
+</Line>
+<Line Number="43">
+<![CDATA[]]>
+</Line>
+<Line Number="44">
+<![CDATA[/************************************************]]>
+</Line>
+<Line Number="45">
+<![CDATA[**         TIMER FOR DELAY IN STARTING         **]]>
+</Line>
+<Line Number="46">
+<![CDATA[*************************************************/]]>
+</Line>
+<Line Number="47">
+<![CDATA[Tmr_StartDelay.PRE := (StartDelay * 1000.0);]]>
+</Line>
+<Line Number="48">
+<![CDATA[Tmr_StartDelay.TimerEnable := 1;]]>
+</Line>
+<Line Number="49">
+<![CDATA[TONR(Tmr_StartDelay);]]>
+</Line>
+<Line Number="50">
+<![CDATA[Ready := Tmr_StartDelay.DN;]]>
+</Line>
+<Line Number="51">
+<![CDATA[]]>
+</Line>
+<Line Number="52">
+<![CDATA[/************************************************]]>
+</Line>
+<Line Number="53">
+<![CDATA[**     TIMER TO MAINTAIN RUNNING FREQUENCY     **]]>
+</Line>
+<Line Number="54">
+<![CDATA[*************************************************/]]>
+</Line>
+<Line Number="55">
+<![CDATA[Tmr_Runtime.PRE := 50;]]>
+</Line>
+<Line Number="56">
+<![CDATA[Tmr_Runtime.TimerEnable := Tmr_StartDelay.DN;]]>
+</Line>
+<Line Number="57">
+<![CDATA[Tmr_Runtime.Reset := Tmr_Runtime.DN;]]>
+</Line>
+<Line Number="58">
+<![CDATA[TONR(Tmr_Runtime);]]>
+</Line>
+<Line Number="59">
+<![CDATA[]]>
+</Line>
+<Line Number="60">
+<![CDATA[//ALL PROCESSING IS PERFORMED WHEN RUNTIME TIMER EXPIRES]]>
+</Line>
+<Line Number="61">
+<![CDATA[IF (Tmr_Runtime.DN AND Tmr_StartDelay.TT) THEN]]>
+</Line>
+<Line Number="62">
+<![CDATA[]]>
+</Line>
+<Line Number="63">
+<![CDATA[	//RESET FAULTS WHEN STARTING UP]]>
+</Line>
+<Line Number="64">
+<![CDATA[	Fault := 0;]]>
+</Line>
+<Line Number="65">
+<![CDATA[ELSIF (Tmr_Runtime.DN AND Tmr_StartDelay.DN) THEN]]>
+</Line>
+<Line Number="66">
+<![CDATA[	]]>
+</Line>
+<Line Number="67">
+<![CDATA[	ONS_Initialization.InputBit := Enable;]]>
+</Line>
+<Line Number="68">
+<![CDATA[	OSRI(ONS_Initialization);]]>
+</Line>
+<Line Number="69">
+<![CDATA[	IF (ONS_Initialization.OutputBit) THEN]]>
+</Line>
+<Line Number="70">
+<![CDATA[		//SET THE SLOT IN THE PATH]]>
+</Line>
+<Line Number="71">
+<![CDATA[		EnetModulePort.DATA[1] := EthernetSlot;]]>
+</Line>
+<Line Number="72">
+<![CDATA[]]>
+</Line>
+<Line Number="73">
+<![CDATA[		//SET PATH FOR ALL MESSAGE BLOCKS]]>
+</Line>
+<Line Number="74">
+<![CDATA[		COP(EnetModulePort, MsgDeleteAll.Path, 1);]]>
+</Line>
+<Line Number="75">
+<![CDATA[		COP(EnetModulePort, MsgCreateSocket.Path, 1);]]>
+</Line>
+<Line Number="76">
+<![CDATA[		COP(EnetModulePort, MsgConnAcceptTimeout.Path, 1);]]>
+</Line>
+<Line Number="77">
+<![CDATA[		COP(EnetModulePort, MsgConnAccept.Path, 1);]]>
+</Line>
+<Line Number="78">
+<![CDATA[		COP(EnetModulePort, MsgSocketInactivityTimeout.Path, 1);]]>
+</Line>
+<Line Number="79">
+<![CDATA[		COP(EnetModulePort, MsgChangeLoggingOptions.Path, 1);]]>
+</Line>
+<Line Number="80">
+<![CDATA[		COP(EnetModulePort, MsgReadData.Path, 1);]]>
+</Line>
+<Line Number="81">
+<![CDATA[		COP(EnetModulePort, MsgWriteData.Path, 1);]]>
+</Line>
+<Line Number="82">
+<![CDATA[]]>
+</Line>
+<Line Number="83">
+<![CDATA[		//CLEAR SOCKET DATA]]>
+</Line>
+<Line Number="84">
+<![CDATA[		Connection.SocketInstance := 0;]]>
+</Line>
+<Line Number="85">
+<![CDATA[		SocketCreated := 0;]]>
+</Line>
+<Line Number="86">
+<![CDATA[		AcceptTimeoutSet := 0;]]>
+</Line>
+<Line Number="87">
+<![CDATA[		ConnAccepted := 0;]]>
+</Line>
+<Line Number="88">
+<![CDATA[		InactivityTimeoutSet := 0;]]>
+</Line>
+<Line Number="89">
+<![CDATA[		Connected := 0;]]>
+</Line>
+<Line Number="90">
+<![CDATA[]]>
+</Line>
+<Line Number="91">
+<![CDATA[		//DELETE ALL EXISTING SOCKETS]]>
+</Line>
+<Line Number="92">
+<![CDATA[		MSG(MsgDeleteAll);]]>
+</Line>
+<Line Number="93">
+<![CDATA[	END_IF;]]>
+</Line>
+<Line Number="94">
+<![CDATA[]]>
+</Line>
+<Line Number="95">
+<![CDATA[	ONS_SocketRefresh.InputBit := 0;]]>
+</Line>
+<Line Number="96">
+<![CDATA[	OSRI(ONS_SocketRefresh);]]>
+</Line>
+<Line Number="97">
+<![CDATA[	IF (ONS_SocketRefresh.OutputBit) THEN]]>
+</Line>
+<Line Number="98">
+<![CDATA[]]>
+</Line>
+<Line Number="99">
+<![CDATA[	END_IF;]]>
+</Line>
+<Line Number="100">
+<![CDATA[]]>
+</Line>
+<Line Number="101">
+<![CDATA[	//CHECK FOR ERROR ON DELETE ALL MSG]]>
+</Line>
+<Line Number="102">
+<![CDATA[	ONS_DeleteAllSocketFail.InputBit := MsgDeleteAll.ER;]]>
+</Line>
+<Line Number="103">
+<![CDATA[	OSRI(ONS_DeleteAllSocketFail);]]>
+</Line>
+<Line Number="104">
+<![CDATA[	IF (ONS_DeleteAllSocketFail.OutputBit) THEN]]>
+</Line>
+<Line Number="105">
+<![CDATA[		Fault := 7;]]>
+</Line>
+<Line Number="106">
+<![CDATA[	ELSE]]>
+</Line>
+<Line Number="107">
+<![CDATA[		;]]>
+</Line>
+<Line Number="108">
+<![CDATA[	END_IF;]]>
+</Line>
+<Line Number="109">
+<![CDATA[]]>
+</Line>
+<Line Number="110">
+<![CDATA[	//DELETE ALL MSG SUCCESS]]>
+</Line>
+<Line Number="111">
+<![CDATA[	ONS_DeleteAllSocketSuccess.InputBit := MsgDeleteAll.DN;]]>
+</Line>
+<Line Number="112">
+<![CDATA[	OSRI(ONS_DeleteAllSocketSuccess);]]>
+</Line>
+<Line Number="113">
+<![CDATA[	IF (ONS_DeleteAllSocketSuccess.OutputBit OR LostListenSocket OR (Tmr_RetryCreateSocket.DN AND Enable)) THEN]]>
+</Line>
+<Line Number="114">
+<![CDATA[		SocketParameters.Addr.Port := TcpPort;]]>
+</Line>
+<Line Number="115">
+<![CDATA[		SocketParameters.Addr.Family := 2; //IPv4]]>
+</Line>
+<Line Number="116">
+<![CDATA[		SocketParameters.Type := 1; //TCP]]>
+</Line>
+<Line Number="117">
+<![CDATA[		MSG(MsgCreateSocket);]]>
+</Line>
+<Line Number="118">
+<![CDATA[	END_IF;]]>
+</Line>
+<Line Number="119">
+<![CDATA[]]>
+</Line>
+<Line Number="120">
+<![CDATA[	//WHEN CREATE FAILS, RUN RETRY TIMER]]>
+</Line>
+<Line Number="121">
+<![CDATA[	IF (MsgCreateSocket.ER) THEN]]>
+</Line>
+<Line Number="122">
+<![CDATA[		Tmr_RetryCreateSocket.TimerEnable := 1;]]>
+</Line>
+<Line Number="123">
+<![CDATA[		Tmr_RetryCreateSocket.PRE := 2000;]]>
+</Line>
+<Line Number="124">
+<![CDATA[		TONR(Tmr_RetryCreateSocket);]]>
+</Line>
+<Line Number="125">
+<![CDATA[	END_IF;]]>
+</Line>
+<Line Number="126">
+<![CDATA[]]>
+</Line>
+<Line Number="127">
+<![CDATA[	//WHEN CREATE FAILS, SET FAULT]]>
+</Line>
+<Line Number="128">
+<![CDATA[	ONS_CreateSocketFail.InputBit := MsgCreateSocket.ER;]]>
+</Line>
+<Line Number="129">
+<![CDATA[	OSRI(ONS_CreateSocketFail);]]>
+</Line>
+<Line Number="130">
+<![CDATA[	IF (ONS_CreateSocketFail.OutputBit) THEN]]>
+</Line>
+<Line Number="131">
+<![CDATA[		Fault := 8;]]>
+</Line>
+<Line Number="132">
+<![CDATA[	END_IF;]]>
+</Line>
+<Line Number="133">
+<![CDATA[]]>
+</Line>
+<Line Number="134">
+<![CDATA[	//SOCKET CREATE SUCCESS]]>
+</Line>
+<Line Number="135">
+<![CDATA[	ONS_CreateSocketSuccess.InputBit := MsgCreateSocket.DN;]]>
+</Line>
+<Line Number="136">
+<![CDATA[	OSRI(ONS_CreateSocketSuccess);]]>
+</Line>
+<Line Number="137">
+<![CDATA[	IF (ONS_CreateSocketSuccess.OutputBit) THEN]]>
+</Line>
+<Line Number="138">
+<![CDATA[		SocketCreated := 1;]]>
+</Line>
+<Line Number="139">
+<![CDATA[		MsgConnAcceptTimeout.Instance := SocketInstance;]]>
+</Line>
+<Line Number="140">
+<![CDATA[		MSG(MsgConnAcceptTimeout);]]>
+</Line>
+<Line Number="141">
+<![CDATA[	END_IF;]]>
+</Line>
+<Line Number="142">
+<![CDATA[]]>
+</Line>
+<Line Number="143">
+<![CDATA[	//WHEN SET TIMEOUT FAILS, SET FAULT]]>
+</Line>
+<Line Number="144">
+<![CDATA[	ONS_ConnAcceptTimeoutFail.InputBit := MsgConnAcceptTimeout.ER;]]>
+</Line>
+<Line Number="145">
+<![CDATA[	OSRI(ONS_ConnAcceptTimeoutFail);]]>
+</Line>
+<Line Number="146">
+<![CDATA[	IF (ONS_ConnAcceptTimeoutFail.OutputBit) THEN]]>
+</Line>
+<Line Number="147">
+<![CDATA[		Fault := 11;]]>
+</Line>
+<Line Number="148">
+<![CDATA[	END_IF;]]>
+</Line>
+<Line Number="149">
+<![CDATA[]]>
+</Line>
+<Line Number="150">
+<![CDATA[	//CONNECTION ACCEPT TIMEOUT SUCCESS]]>
+</Line>
+<Line Number="151">
+<![CDATA[	ONS_ConnAcceptTimeoutSuccess.InputBit := MsgConnAcceptTimeout.DN;]]>
+</Line>
+<Line Number="152">
+<![CDATA[	OSRI(ONS_ConnAcceptTimeoutSuccess);]]>
+</Line>
+<Line Number="153">
+<![CDATA[	IF (ONS_ConnAcceptTimeoutSuccess.OutputBit) THEN]]>
+</Line>
+<Line Number="154">
+<![CDATA[		AcceptTimeoutSet := 1;]]>
+</Line>
+<Line Number="155">
+<![CDATA[	END_IF;]]>
+</Line>
+<Line Number="156">
+<![CDATA[]]>
+</Line>
+<Line Number="157">
+<![CDATA[	//CONDITIONS TO ACCEPT A SOCKET CONNECTION]]>
+</Line>
+<Line Number="158">
+<![CDATA[	ONS_SocketReadyForListen.InputBit := Tmr_ListenRetry.DN OR SocketCreated;]]>
+</Line>
+<Line Number="159">
+<![CDATA[	OSRI(ONS_SocketReadyForListen);]]>
+</Line>
+<Line Number="160">
+<![CDATA[]]>
+</Line>
+<Line Number="161">
+<![CDATA[	IF (ONS_SocketReadyForListen.OutputBit) THEN]]>
+</Line>
+<Line Number="162">
+<![CDATA[		MsgConnAccept.Instance := SocketInstance;]]>
+</Line>
+<Line Number="163">
+<![CDATA[		MSG(MsgConnAccept);]]>
+</Line>
+<Line Number="164">
+<![CDATA[	END_IF;]]>
+</Line>
+<Line Number="165">
+<![CDATA[]]>
+</Line>
+<Line Number="166">
+<![CDATA[	//ACCEPT CONNECTION FAILS]]>
+</Line>
+<Line Number="167">
+<![CDATA[	ONS_ConnAcceptFail.InputBit := MsgConnAccept.ER;]]>
+</Line>
+<Line Number="168">
+<![CDATA[	OSRI(ONS_ConnAcceptFail);]]>
+</Line>
+<Line Number="169">
+<![CDATA[]]>
+</Line>
+<Line Number="170">
+<![CDATA[	IF (ONS_ConnAcceptFail.OutputBit AND (MsgConnAccept.EXERR <> 70)) THEN]]>
+</Line>
+<Line Number="171">
+<![CDATA[		Fault := 9;]]>
+</Line>
+<Line Number="172">
+<![CDATA[	END_IF;]]>
+</Line>
+<Line Number="173">
+<![CDATA[]]>
+</Line>
+<Line Number="174">
+<![CDATA[	//IF LISTEN ERROR CAUSED BY NON-EXISTENT SOCKET IT WILL GENERATE A NEW SOCKET CREATE REQUEST]]>
+</Line>
+<Line Number="175">
+<![CDATA[	LostListenSocket := ONS_ConnAcceptFail.OutputBit AND (MsgConnAccept.ERR = 5) AND (MsgConnAccept.EXERR = 1);]]>
+</Line>
+<Line Number="176">
+<![CDATA[]]>
+</Line>
+<Line Number="177">
+<![CDATA[	//IF ANY OTHER ERROR RETURNED THEN ANOTHER LISTEN ATTEMPT WILL BE MADE]]>
+</Line>
+<Line Number="178">
+<![CDATA[	IF ((MsgConnAccept.ER AND NOT Tmr_ListenRetry.DN) OR MsgConnAccept.DN) THEN]]>
+</Line>
+<Line Number="179">
+<![CDATA[		Tmr_ListenRetry.PRE := 20;]]>
+</Line>
+<Line Number="180">
+<![CDATA[		Tmr_ListenRetry.TimerEnable := 1;]]>
+</Line>
+<Line Number="181">
+<![CDATA[		Tmr_ListenRetry.Reset := 0;]]>
+</Line>
+<Line Number="182">
+<![CDATA[	ELSE]]>
+</Line>
+<Line Number="183">
+<![CDATA[		Tmr_ListenRetry.TimerEnable := 0;]]>
+</Line>
+<Line Number="184">
+<![CDATA[		Tmr_ListenRetry.Reset := 1;]]>
+</Line>
+<Line Number="185">
+<![CDATA[	END_IF;]]>
+</Line>
+<Line Number="186">
+<![CDATA[]]>
+</Line>
+<Line Number="187">
+<![CDATA[	TONR(Tmr_ListenRetry);]]>
+</Line>
+<Line Number="188">
+<![CDATA[]]>
+</Line>
+<Line Number="189">
+<![CDATA[	//ACCEPT CONNECTION SUCCESS]]>
+</Line>
+<Line Number="190">
+<![CDATA[	ONS_ConnAcceptSuccess.InputBit := MsgConnAccept.DN;]]>
+</Line>
+<Line Number="191">
+<![CDATA[	OSRI(ONS_ConnAcceptSuccess);]]>
+</Line>
+<Line Number="192">
+<![CDATA[]]>
+</Line>
+<Line Number="193">
+<![CDATA[	IF (ONS_ConnAcceptSuccess.OutputBit) THEN]]>
+</Line>
+<Line Number="194">
+<![CDATA[		ConnAccepted := 1;]]>
+</Line>
+<Line Number="195">
+<![CDATA[		Fault := 0;]]>
+</Line>
+<Line Number="196">
+<![CDATA[		MsgSocketInactivityTimeout.Instance := SocketAcceptResponse.Instance;]]>
+</Line>
+<Line Number="197">
+<![CDATA[		MSG(MsgSocketInactivityTimeout);]]>
+</Line>
+<Line Number="198">
+<![CDATA[	END_IF;]]>
+</Line>
+<Line Number="199">
+<![CDATA[]]>
+</Line>
+<Line Number="200">
+<![CDATA[	ONS_SetInactivityTimeoutSuccess.InputBit := MsgSocketInactivityTimeout.DN;]]>
+</Line>
+<Line Number="201">
+<![CDATA[	OSRI(ONS_SetInactivityTimeoutSuccess);]]>
+</Line>
+<Line Number="202">
+<![CDATA[]]>
+</Line>
+<Line Number="203">
+<![CDATA[	IF (ONS_SetInactivityTimeoutSuccess.OutputBit) THEN]]>
+</Line>
+<Line Number="204">
+<![CDATA[		InactivityTimeoutSet := 1;]]>
+</Line>
+<Line Number="205">
+<![CDATA[]]>
+</Line>
+<Line Number="206">
+<![CDATA[		//FIND AN EMPTY SOCKET]]>
+</Line>
+<Line Number="207">
+<![CDATA[		IF (Connection.SocketInstance = 0) THEN]]>
+</Line>
+<Line Number="208">
+<![CDATA[			Connection.SocketInstance := SocketAcceptResponse.Instance;]]>
+</Line>
+<Line Number="209">
+<![CDATA[]]>
+</Line>
+<Line Number="210">
+<![CDATA[			MsgReadData.Instance := SocketAcceptResponse.Instance;]]>
+</Line>
+<Line Number="211">
+<![CDATA[			MsgWriteData.Instance := SocketAcceptResponse.Instance;]]>
+</Line>
+<Line Number="212">
+<![CDATA[]]>
+</Line>
+<Line Number="213">
+<![CDATA[			Connection.ReadBuffer.LEN := 0;]]>
+</Line>
+<Line Number="214">
+<![CDATA[		END_IF;]]>
+</Line>
+<Line Number="215">
+<![CDATA[	END_IF;]]>
+</Line>
+<Line Number="216">
+<![CDATA[]]>
+</Line>
+<Line Number="217">
+<![CDATA[]]>
+</Line>
+<Line Number="218">
+<![CDATA[	//Set Read/Write message timeout]]>
+</Line>
+<Line Number="219">
+<![CDATA[	Connection.ReadRequest.Timeout := ReadMessageTimeout * 1000;]]>
+</Line>
+<Line Number="220">
+<![CDATA[	Connection.WriteData.Timeout := WriteMessageTimeout * 1000;]]>
+</Line>
+<Line Number="221">
+<![CDATA[]]>
+</Line>
+<Line Number="222">
+<![CDATA[	EFX_MBS_RWMSG(ReadWriteMessages, Connection, MsgReadData, MsgWriteData);]]>
+</Line>
+<Line Number="223">
+<![CDATA[]]>
+</Line>
+<Line Number="224">
+<![CDATA[	//PROCESS PACKETS FROM MASTER]]>
+</Line>
+<Line Number="225">
+<![CDATA[	IF (Connection.SocketInstance <> 0) THEN		//Check for valid socket instance]]>
+</Line>
+<Line Number="226">
+<![CDATA[]]>
+</Line>
+<Line Number="227">
+<![CDATA[		//If any data received, add it to the read buffer.  This is done]]>
+</Line>
+<Line Number="228">
+<![CDATA[		//   to handle partial packets with incomplete Modbus string and]]>
+</Line>
+<Line Number="229">
+<![CDATA[		//   packets with more than one command]]>
+</Line>
+<Line Number="230">
+<![CDATA[		IF (Connection.ReadComplete) THEN]]>
+</Line>
+<Line Number="231">
+<![CDATA[			IF (Connection.ReadData.Buf.LEN > 0) THEN]]>
+</Line>
+<Line Number="232">
+<![CDATA[				CONCAT(Connection.ReadBuffer, Connection.ReadData.Buf, Connection.ReadBuffer);]]>
+</Line>
+<Line Number="233">
+<![CDATA[			END_IF;]]>
+</Line>
+<Line Number="234">
+<![CDATA[		]]>
+</Line>
+<Line Number="235">
+<![CDATA[			Connection.ReadComplete := 0;]]>
+</Line>
+<Line Number="236">
+<![CDATA[		END_IF;]]>
+</Line>
+<Line Number="237">
+<![CDATA[]]>
+</Line>
+<Line Number="238">
+<![CDATA[		IF ( NOT Connection.WriteRequired AND (Connection.ReadBuffer.LEN >= 8)) THEN]]>
+</Line>
+<Line Number="239">
+<![CDATA[			//Check for a valid modbus transaction code, clear the buffer if]]>
+</Line>
+<Line Number="240">
+<![CDATA[			//   incorrect and attempt to re-sync the modbus transactions]]>
+</Line>
+<Line Number="241">
+<![CDATA[			IF ((Connection.ReadBuffer.DATA[7] > 6) AND (Connection.ReadBuffer.DATA[7] <> 15) AND (Connection.ReadBuffer.DATA[7] <> 16)) THEN]]>
+</Line>
+<Line Number="242">
+<![CDATA[				Connection.ReadBuffer.LEN := 0;]]>
+</Line>
+<Line Number="243">
+<![CDATA[				Connection.CommandInfo.ValidFunction := 1;]]>
+</Line>
+<Line Number="244">
+<![CDATA[			ELSE]]>
+</Line>
+<Line Number="245">
+<![CDATA[				Connection.CommandInfo.ValidFunction := 0;]]>
+</Line>
+<Line Number="246">
+<![CDATA[			END_IF;]]>
+</Line>
+<Line Number="247">
+<![CDATA[]]>
+</Line>
+<Line Number="248">
+<![CDATA[			//Verify all bytes from packet have been reveived]]>
+</Line>
+<Line Number="249">
+<![CDATA[			COP(Connection.ReadBuffer.DATA[4], Connection.CommandInfo.Length, 1);]]>
+</Line>
+<Line Number="250">
+<![CDATA[			SWPB(Connection.CommandInfo.Length, REVERSE, Connection.CommandInfo.Length);		]]>
+</Line>
+<Line Number="251">
+<![CDATA[			Connection.CommandInfo.PacketSize := Connection.CommandInfo.Length + 6;]]>
+</Line>
+<Line Number="252">
+<![CDATA[]]>
+</Line>
+<Line Number="253">
+<![CDATA[			IF (Connection.ReadBuffer.LEN >= Connection.CommandInfo.PacketSize) THEN]]>
+</Line>
+<Line Number="254">
+<![CDATA[				COP(Connection.ReadBuffer.DATA[0], Connection.CommandInfo.Data[0], Connection.CommandInfo.PacketSize);]]>
+</Line>
+<Line Number="255">
+<![CDATA[				DELETE(Connection.ReadBuffer, Connection.CommandInfo.PacketSize, 1, Connection.ReadBuffer);]]>
+</Line>
+<Line Number="256">
+<![CDATA[				Connection.DataReceived := 1;]]>
+</Line>
+<Line Number="257">
+<![CDATA[			END_IF;]]>
+</Line>
+<Line Number="258">
+<![CDATA[]]>
+</Line>
+<Line Number="259">
+<![CDATA[			//Extract remaining items from packets]]>
+</Line>
+<Line Number="260">
+<![CDATA[			IF (Connection.DataReceived) THEN]]>
+</Line>
+<Line Number="261">
+<![CDATA[				//Transaction ID]]>
+</Line>
+<Line Number="262">
+<![CDATA[				COP(Connection.ReadBuffer.DATA[0], Connection.CommandInfo.Transaction, 1);]]>
+</Line>
+<Line Number="263">
+<![CDATA[]]>
+</Line>
+<Line Number="264">
+<![CDATA[				//Protocol ID]]>
+</Line>
+<Line Number="265">
+<![CDATA[				COP(Connection.ReadBuffer.DATA[2], Connection.CommandInfo.Protocol, 1);]]>
+</Line>
+<Line Number="266">
+<![CDATA[]]>
+</Line>
+<Line Number="267">
+<![CDATA[				//Unit ID]]>
+</Line>
+<Line Number="268">
+<![CDATA[				COP(Connection.ReadBuffer.DATA[6], Connection.CommandInfo.Unit, 1);]]>
+</Line>
+<Line Number="269">
+<![CDATA[]]>
+</Line>
+<Line Number="270">
+<![CDATA[				//Function]]>
+</Line>
+<Line Number="271">
+<![CDATA[				COP(Connection.ReadBuffer.DATA[7], Connection.CommandInfo.Function, 1);]]>
+</Line>
+<Line Number="272">
+<![CDATA[]]>
+</Line>
+<Line Number="273">
+<![CDATA[				//Address]]>
+</Line>
+<Line Number="274">
+<![CDATA[				COP(Connection.ReadBuffer.DATA[8], Connection.CommandInfo.StartAddress, 1);]]>
+</Line>
+<Line Number="275">
+<![CDATA[				SWPB(Connection.CommandInfo.StartAddress, REVERSE, Connection.CommandInfo.StartAddress);]]>
+</Line>
+<Line Number="276">
+<![CDATA[				Connection.CommandInfo.StartAddress := Connection.CommandInfo.StartAddress + 1;]]>
+</Line>
+<Line Number="277">
+<![CDATA[]]>
+</Line>
+<Line Number="278">
+<![CDATA[]]>
+</Line>
+<Line Number="279">
+<![CDATA[				//Item Count]]>
+</Line>
+<Line Number="280">
+<![CDATA[				COP(Connection.ReadBuffer.DATA[10], Connection.CommandInfo.RegisterCount, 1);]]>
+</Line>
+<Line Number="281">
+<![CDATA[				SWPB(Connection.CommandInfo.RegisterCount, REVERSE, Connection.CommandInfo.RegisterCount);]]>
+</Line>
+<Line Number="282">
+<![CDATA[				]]>
+</Line>
+<Line Number="283">
+<![CDATA[				//Process Commands]]>
+</Line>
+<Line Number="284">
+<![CDATA[				CASE Connection.CommandInfo.Function OF]]>
+</Line>
+<Line Number="285">
+<![CDATA[					1:	EFX_MBS_READ_STATUS(ReadStatus,Connection, 120, CoilStatus);]]>
+</Line>
+<Line Number="286">
+<![CDATA[					2:	EFX_MBS_READ_STATUS(ReadStatus,Connection, 120, InputStatus);]]>
+</Line>
+<Line Number="287">
+<![CDATA[					3:	EFX_MBS_READ_REGISTER(ReadRegister, Connection, 120, HoldingRegister);]]>
+</Line>
+<Line Number="288">
+<![CDATA[					4:	EFX_MBS_READ_REGISTER(ReadRegister, Connection, 120, InputRegister);]]>
+</Line>
+<Line Number="289">
+<![CDATA[					5:	EFX_MBS_WRITE_STATUS(WriteStatus, Connection, CoilStatus);]]>
+</Line>
+<Line Number="290">
+<![CDATA[					6:	EFX_MBS_WRITE_REGISTER(WriteRegister, Connection, HoldingRegister);]]>
+</Line>
+<Line Number="291">
+<![CDATA[					15:	EFX_MBS_WRITE_STATUS(WriteStatus, Connection, CoilStatus);]]>
+</Line>
+<Line Number="292">
+<![CDATA[					16:	EFX_MBS_WRITE_REGISTER(WriteRegister, Connection, HoldingRegister);]]>
+</Line>
+<Line Number="293">
+<![CDATA[]]>
+</Line>
+<Line Number="294">
+<![CDATA[				ELSE]]>
+</Line>
+<Line Number="295">
+<![CDATA[					COP(Connection.CommandInfo, testCMD, 1);]]>
+</Line>
+<Line Number="296">
+<![CDATA[				END_CASE;]]>
+</Line>
+<Line Number="297">
+<![CDATA[			END_IF;]]>
+</Line>
+<Line Number="298">
+<![CDATA[		ELSE]]>
+</Line>
+<Line Number="299">
+<![CDATA[			Connection.DataReceived := 0;]]>
+</Line>
+<Line Number="300">
+<![CDATA[		END_IF;]]>
+</Line>
+<Line Number="301">
+<![CDATA[	END_IF;]]>
+</Line>
+<Line Number="302">
+<![CDATA[]]>
+</Line>
+<Line Number="303">
+<![CDATA[]]>
+</Line>
+<Line Number="304">
+<![CDATA[]]>
+</Line>
+<Line Number="305">
+<![CDATA[]]>
+</Line>
+<Line Number="306">
+<![CDATA[	//WEB PAGE EVENT LOGGING FOR SOCKET OBJECTS]]>
+</Line>
+<Line Number="307">
+<![CDATA[	LogOptions.0 := LogOption_Create;]]>
+</Line>
+<Line Number="308">
+<![CDATA[	LogOptions.1 := LogOption_Open;]]>
+</Line>
+<Line Number="309">
+<![CDATA[	LogOptions.2 := LogOption_Accept;]]>
+</Line>
+<Line Number="310">
+<![CDATA[	LogOptions.3 := LogOption_Read;]]>
+</Line>
+<Line Number="311">
+<![CDATA[	LogOptions.4 := LogOption_Write;]]>
+</Line>
+<Line Number="312">
+<![CDATA[	LogOptions.5 := LogOption_Delete;]]>
+</Line>
+<Line Number="313">
+<![CDATA[	LogOptions.6 := LogOption_Attribute;]]>
+</Line>
+<Line Number="314">
+<![CDATA[	LogOptions.7 := LogOption_Errors;]]>
+</Line>
+<Line Number="315">
+<![CDATA[]]>
+</Line>
+<Line Number="316">
+<![CDATA[	IF (LogOptions <> OldLogOptions) THEN]]>
+</Line>
+<Line Number="317">
+<![CDATA[		OldLogOptions := LogOptions;]]>
+</Line>
+<Line Number="318">
+<![CDATA[		MSG(MsgChangeLoggingOptions);]]>
+</Line>
+<Line Number="319">
+<![CDATA[	END_IF;]]>
+</Line>
+<Line Number="320">
+<![CDATA[]]>
+</Line>
+<Line Number="321">
+<![CDATA[	Error := Fault <> 0;]]>
+</Line>
+<Line Number="322">
+<![CDATA[]]>
+</Line>
+<Line Number="323">
+<![CDATA[END_IF;]]>
+</Line>
+<Line Number="324">
+<![CDATA[]]>
+</Line>
+<Line Number="325">
+<![CDATA[]]>
+</Line>
+<Line Number="326">
+<![CDATA[]]>
+</Line>
+<Line Number="327">
+<![CDATA[]]>
+</Line>
+<Line Number="328">
+<![CDATA[]]>
+</Line>
+<Line Number="329">
+<![CDATA[]]>
+</Line>
+<Line Number="330">
+<![CDATA[]]>
+</Line>
+<Line Number="331">
+<![CDATA[]]>
+</Line>
+<Line Number="332">
+<![CDATA[]]>
+</Line>
+<Line Number="333">
+<![CDATA[]]>
+</Line>
+<Line Number="334">
+<![CDATA[]]>
+</Line>
+<Line Number="335">
+<![CDATA[]]>
+</Line>
+</STContent>
+</Routine>
+</Routines>
+<Dependencies>
+<Dependency Type="DataType" Name="EFX_MBS_CONN"/>
+<Dependency Type="AddOnInstructionDefinition" Name="EFX_MBS_READ_REGISTER"/>
+<Dependency Type="AddOnInstructionDefinition" Name="EFX_MBS_READ_STATUS"/>
+<Dependency Type="AddOnInstructionDefinition" Name="EFX_MBS_RWMSG"/>
+<Dependency Type="DataType" Name="TCP_ACCEPT_RESP"/>
+<Dependency Type="DataType" Name="TCP_SOCKET_PARAM"/>
+<Dependency Type="DataType" Name="EFX_MBS_REQ_PKT_INFO"/>
+<Dependency Type="AddOnInstructionDefinition" Name="EFX_MBS_WRITE_REGISTER"/>
+<Dependency Type="AddOnInstructionDefinition" Name="EFX_MBS_WRITE_STATUS"/>
+</Dependencies>
+</AddOnInstructionDefinition>
+</AddOnInstructionDefinitions>
+</Controller>
+</RSLogix5000Content>
