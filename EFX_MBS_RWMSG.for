@@ -1,7 +1,7 @@
 //SOCKET READS/WRITES FOR ALL CONNECTIONS
 IF (Connection.SocketInstance <> 0) THEN
 	Connection.Open := 1;
-END_IF;
+END IF;
 
 IF (Connection.Open) THEN
 	//Read incoming traffic
